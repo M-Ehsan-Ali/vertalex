@@ -1,3 +1,4 @@
+import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import Testimonials from "./Testimonials/page";
 
 export const ourProjects = [
@@ -48,7 +49,79 @@ export const ourNews = [
   },
 ];
 
-export default function Home() {
+interface UserImage {
+  id: string;
+  sourceUrl: string;
+}
+
+interface NewsImage {
+  id: string;
+  sourceUrl: string;
+}
+
+interface NewsDetails {
+  about: string;
+  description: string;
+  fieldGroupName: string;
+  readtime: string;
+  title: string;
+  username: string;
+  userimage: UserImage;
+  image: NewsImage;
+}
+
+interface NewsNode {
+  New: NewsDetails;
+}
+
+interface GetNewsResponse {
+  news: any;
+  nodes: NewsNode[];
+}
+export default async function Home() {
+  const newsQuery = `
+  query GetNews {
+   news {
+    nodes {
+      New {
+        about
+        description
+        readtime
+        title
+        username
+        userimage {
+          id
+          sourceUrl
+        }
+        image {
+          id
+          sourceUrl
+        }
+      }
+    }
+  }
+}`;
+  let newsData: NewsDetails[] = [];
+
+  try {
+    const news: GetNewsResponse = await fetchGraphQL(newsQuery);
+    newsData = news?.news.nodes.map((node: any) => ({
+      title: node.New.title,
+      about: node.New.about,
+      description: node.New.description,
+      readtime: node.New.readtime,
+      username: node.New.username,
+      userimage: node.New.userimage,
+      image: node.New.image,
+    }));
+  } catch (error) {
+    console.error("Error fetching news:", error);
+  }
+
+  const lastElement: any = newsData[newsData.length - 1];
+  const aboutParts: any = lastElement.about
+    .split(",")
+    .map((part: any) => part.trim());
   return (
     <div id="home">
       {/* Hero Section start */}
@@ -283,59 +356,66 @@ export default function Home() {
         </div>
         <div className="mt-[88px] flex justify-between gap-[32px]">
           <div className="w-[60%]">
-            <img src="/newsMainImage.png" alt="News" className="w-full" />
+            <img
+              src={lastElement.image.sourceUrl}
+              alt={lastElement.image.id}
+              className="w-full rounded-[16px]"
+            />
             <div className="flex gap-[8px] mt-[32px]">
-              <div className="w-fit font-figtree border border-[D9dedd] rounded-[20px] p-[2px_8px] text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-center no-underline">
-                Aluminium
-              </div>
-              <div className="w-fit font-figtree border border-[D9dedd] rounded-[20px] p-[2px_8px] text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-center no-underline">
-                Solutions
-              </div>
+              {aboutParts.map((part: any, index: any) => (
+                <div
+                  key={index}
+                  className="w-fit font-figtree border border-[D9dedd] rounded-[20px] p-[2px_8px] text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-center no-underline"
+                >
+                  {part}
+                </div>
+              ))}
             </div>
             <p className="font-roboto text-[45px] font-normal leading-[52px] text-[#1d1f1e] text-left no-underline mt-[24px]">
-              How green aluminium is transforming the metal industry
+              {lastElement.title}
             </p>
             <p className="font-figtree text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-left no-underline text-[#646a69] mt-[24px]">
-              Aluminum is revolutionizing the way we build and create. In this
-              blog post, we'll explore the remarkable potential of aluminum
-              technology, its environmental advantages, and how you can harness
-              this sustainable material for a stronger, more efficient future.
+              {lastElement.description}
             </p>
             <div className="flex gap-[16px] items-center mt-[24px]">
               <img
-                src="/userImage.png"
-                alt="user"
+                src={lastElement.userimage.sourceUrl}
+                alt={lastElement.userimage.id}
                 className="w-[40px] h-[40px] rounded-[50%]"
               />
               <p className="font-figtree text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
-                Leslie Alexander
+                {lastElement.username}
               </p>
               <div className="w-[4px] h-[4px] bg-[#929c9a]"></div>
               <p className="font-figtree text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
-                9 min read
+                {lastElement.readtime}
               </p>
             </div>
           </div>
           <div className="w-[41%] flex flex-col gap-[32px]">
-            {ourNews?.map((item) => (
+            {newsData?.map((item) => (
               <div className="flex gap-[32px]">
-                <img src={item.imageSrc} alt={item.imageSrc} />
+                <img
+                  src={item.image.sourceUrl}
+                  alt={item.image.id}
+                  className="w-[177px] h-[177px] rounded-[16px]"
+                />
                 <div>
                   <p className="font-figtree text-[24px] font-medium leading-[36px] tracking-[-0.01em] text-left no-underline">
-                    {item.description}
+                    {item.title}
                   </p>
                   <div className="flex gap-[16px] items-center mt-[24px]">
                     <img
-                      src={item.userImage}
-                      alt={item.userImage}
+                      src={item.userimage.sourceUrl}
+                      alt={item.userimage.id}
                       className="w-[32px] h-[32px] rounded-[50%]"
                     />
                     <p className="font-figtree text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
-                      {item.userName}
+                      {item.username}
                     </p>
                     <div className="w-[4px] h-[4px] bg-[#929c9a]"></div>
                     <p className="font-figtree text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
-                      {item.readTime}
+                      {item.readtime}
                     </p>
                   </div>
                 </div>
