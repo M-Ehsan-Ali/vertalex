@@ -8,10 +8,11 @@ interface MovingImagesProps {
 
 const MovingImages: React.FC<MovingImagesProps> = ({
   images,
-  interval = 3000,
+  interval = 5000,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Automatic image cycling
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -20,21 +21,49 @@ const MovingImages: React.FC<MovingImagesProps> = ({
     return () => clearInterval(timer); // Clean up on component unmount
   }, [images.length, interval]);
 
+  // Navigate to the next image
+  const goToNextImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  // Navigate to the previous image
+  const goToPreviousImage = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+    );
+  };
+
   return (
-    <div className="relative w-[100%] h-[100%] ">
-      {images.map((src, index) => (
-        <img
-          key={index}
-          src={src}
-          alt={`Image ${index}`}
-          className={`absolute top-[0px] left-[0px] w-[100%] h-[100%] rounded-[50%] ${
-            index === currentIndex ? "visible" : "hidden"
-          }`}
-          style={{
-            transition: "opacity 1s ease-in-out",
-          }}
-        />
-      ))}
+    <div className="relative w-[100%] h-[100%] flex items-center justify-center">
+      {/* Left Arrow */}
+      <img
+        onClick={goToPreviousImage}
+        src="/testimonials/left_arrow.svg"
+        className="w-[24px] md:w-[60px] absolute left-4 z-10 text-white bg-black/50 rounded-[10px] cursor-pointer hover:bg-black/70 transition"
+        alt="Previous"
+      />
+
+      {/* Images */}
+      <div className="relative w-[100%] h-[100%] overflow-hidden">
+        {images.map((src, index) => (
+          <img
+            key={index}
+            src={src}
+            alt={`Image ${index}`}
+            className={`absolute top-0 left-0 w-[100%] h-[100%] rounded-[50%] transition-opacity duration-1000 ${
+              index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Right Arrow */}
+      <img
+        onClick={goToNextImage}
+        src="/testimonials/right_arrow.svg"
+        className="w-[24px] md:w-[60px] absolute right-4 z-10 text-white bg-black/50 rounded-[10px] hover:bg-black/70 cursor-pointer transition"
+        alt="Next"
+      />
     </div>
   );
 };
