@@ -124,33 +124,32 @@ export default async function Home() {
   return (
     <div id="home">
       {/* Hero Section start */}
-      <div className="flex flex-col-reverse sm:flex-row p-[0px_18px_0px_18px] sm:p-[0px]">
-        <div className="w-full pt-[0px] pl-[18px] pb-[32px] sm:w-[60%] sm:pt-[86px] sm:pl-[112px] sm:pb-[120px]">
+      <div className="flex flex-col-reverse sm:flex-row w-full p-[0px_18px_0px_18px] sm:p-[0px] gap-[14px] sm:gap-[0px]">
+        <div className="w-full sm:w-[60%] pt-[0px] pl-[0px] pb-[32px] sm:pt-[86px] sm:pl-[112px] sm:pb-[120px]">
           <div className="flex gap-[8px]">
             <img src="/powerIcon.svg" alt="icon" />
             <p className="font-rubik text-[14px] font-medium leading-5 tracking-tight text-left decoration-skip-ink">
               Powering Tomorrow
             </p>
           </div>
-          <p className="font-raleway text-[96px] font-normal leading-[90px] tracking-[-0.05em] text-left decoration-skip-ink mt-[24px]">
+          <p className="font-raleway text-[39px] sm:text-[96px] font-normal leading-[42px] sm:leading-[90px] tracking-[-0.05em] text-center sm:text-left decoration-skip-ink mt-[24px]">
             Cost Effective <br /> & CO2 Compliant
           </p>
-          <p className="font-rubik text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-left decoration-skip-ink mt-[32px]">
+          <p className="sm:w-[592px] font-rubik text-[10px] sm:text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center sm:text-left decoration-skip-ink mt-[32px]">
             Crofton MEA is a UAE based consulting firm that delivers bespoke and{" "}
-            <br />
             catalogue aluminium extrusions and finishes of the highest quality
-            at <br /> competitive prices internationally.
+            at competitive prices internationally.
           </p>
-          <div className="flex gap-[16px] mt-[40px]">
-            <button className="bg-[#445AE0] p-[16px_24px] gap-[10px] rounded-[200px] font-rubik text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-lef text-white">
+          <div className="flex gap-[16px] mt-[40px] justify-center sm:justify-start">
+            <button className="bg-[#445AE0] p-[8px_18px] sm:p-[16px_24px] gap-[10px] rounded-[200px] font-rubik text-[10px] sm:text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-lef text-white">
               See our solutions
             </button>
-            <button className="border border-[#64ce5b] p-[16px_24px] rounded-full font-rubik font-medium text-[16px] leading-6 tracking-tight text-[#1d1f1e] decoration-skip-ink">
+            <button className="border border-[#64ce5b] p-[8px_18px] sm:p-[16px_24px] rounded-full font-rubik font-medium text-[10px] sm:text-[18px] leading-6 tracking-tight text-[#1d1f1e] decoration-skip-ink">
               Get in touch
             </button>
           </div>
         </div>
-        <div className="w-full sm:w-[40%] bg-[#64CE5B] sm:p-[12px] relative">
+        <div className="w-full h-[260px] sm:h-auto sm:w-[40%] bg-[#64CE5B] p-[12px] relative">
           <MovingImages images={images} interval={4000} />
           {/* <img
             src="/heroImage.png"
@@ -185,29 +184,47 @@ export default async function Home() {
       {/* Hero section end */}
 
       {/* Partner section start */}
-      <div className="p-[70px_112px] flex justify-between items-center mt-[40px] border border-[#D9DEDD]">
+      <div className="p-[16px_24px] sm:p-[70px_112px] flex flex-col sm:flex-row justify-between items-center mt-[40px] border border-[#D9DEDD] gap-[24px] sm:gap-[190px]">
         <p className="font-rubik text-[16px] font-medium leading-[24px] tracking-[-0.004em] text-left decoration-skip-ink text-[#262626]">
           Global partners that trusted us
         </p>
-        <img src="/paradise.png" alt="paradise" />
-        <img src="/aspen.png" alt="aspen" />
-        <img src="/octagon.png" alt="octagon" />
+        <div className="flex gap-[40px] sm:gap-[190px]">
+          <img
+            src="/paradise.png"
+            alt="paradise"
+            className="w-[90px] h-[30px] sm:w-[120px] sm-h-[50px]"
+          />
+          <img
+            src="/aspen.png"
+            alt="aspen"
+            className="w-[90px] h-[30px] sm:w-[120px] sm-h-[50px]"
+          />
+          <img
+            src="/octagon.png"
+            alt="octagon"
+            className="w-[90px] h-[30px] sm:w-[120px] sm-h-[50px]"
+          />
+        </div>
       </div>
       {/* Partner section end */}
 
       {/* Why us Section start */}
       <div
         id={"why-us"}
-        className="relative pl-[52px] pb-[70px]"
+        className="relative pl-[16px] sm:pl-[52px] pb-[66px] sm:pb-[70px]"
         style={{
           backgroundImage: `url('/whyUsMain.png')`,
         }}
       >
-        <img src="/whyUsTop.png" alt="Top left" />
-        <p className="text-white font-raleway text-[119px] font-bold leading-[90px] tracking-[-0.05em] text-left no-underline mt-[92px] ml-[30px]">
+        <img
+          src="/whyUsTop.png"
+          alt="Top left"
+          className="w-[170px] sm:h-auto sm:w-auto"
+        />
+        <p className="text-white font-raleway text-[24px] sm:text-[119px] font-bold leading-[90px] tracking-[-0.05em] text-left no-underline mt-[92px] ml-[30px]">
           Why us?
         </p>
-        <p className="w-[57%] bg-[#64ce5b] rounded-[10px] font-rubik text-[20px] font-normal leading-[33px] tracking-[-0.05em] text-left no-underline p-[24px_32px] text-white mt-[92px]">
+        <p className="w-[70%] sm:w-[57%] bg-[#64ce5b] rounded-[10px] font-rubik text-[7px] sm:text-[20px] font-normal leading-[8px] sm:leading-[33px] tracking-[-0.05em] text-left no-underline p-[24px_32px] text-white mt-[20px] sm:mt-[92px]">
           Our aluminium products boast exceptional qualities, including TUV
           Verified Carbon Footprint with low-carbon billets. They are ISO
           certified (9001, 14001, and 45001) and meet the highest standards as a
@@ -219,66 +236,82 @@ export default async function Home() {
         <img
           src="/whyUsBottom.png"
           alt="Top left"
-          className="absolute right-[0px]"
+          className="absolute right-[0px] w-[170px] sm:w-auto bottom-[-25px] sm:bottom-[-50px]"
         />
       </div>
       {/* Why us Section end */}
 
       {/* Key Element Section start */}
-      <div className="mt-[194px] flex justify-center pb-[116px]">
+      <div className="mt-[65px] sm:mt-[194px] flex justify-center pb-[52px] sm:pb-[116px]">
         <div className="flex flex-col items-center">
-          <div className="w-fit p-[7px_56px] rounded-[10px] bg-[#445ae0]">
-            <p className="font-raleway text-[70px] font-normal leading-[90px] tracking-[-0.05em] text-left no-underline text-white">
+          <div className="w-fit p-[8px_12px] sm:p-[7px_56px] rounded-[10px] bg-[#445ae0]">
+            <p className="font-raleway text-[13px] sm:text-[70px] font-normal sm:leading-[90px] tracking-[-0.05em] text-left no-underline text-white">
               Key Elements
             </p>
           </div>
           <div>
-            <div className="flex gap-[360px] mt-[90px]">
-              <div className="flex flex-col items-center w-[383px]">
-                <img src="/TUV.svg" alt="TUV" />
-                <p className="font-rubik text-[24px] font-normal leading-[90px] tracking-[-0.05em] no-underline">
+            <div className="flex gap-[38px] sm:gap-[360px] mt-[36px] sm:mt-[90px] justify-between sm:justify-unset">
+              <div className="flex flex-col items-center sm:w-[383px]">
+                <img src="/TUV.svg" alt="TUV" className="w-[46px] sm:w-auto" />
+                <p className="font-rubik text-[12px] sm:text-[24px] font-normal sm:leading-[90px] tracking-[-0.05em] no-underline">
                   TUV Verified Carbon Footprint
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <img src="/qualanod.svg" alt="qualanod" />
-                <p className="font-rubik text-[24px] font-normal leading-[90px] tracking-[-0.05em] no-underline">
+                <img
+                  src="/qualanod.svg"
+                  alt="qualanod"
+                  className="w-[46px] sm:w-auto"
+                />
+                <p className="font-rubik text-[12px] sm:text-[24px] font-normal sm:leading-[90px] tracking-[-0.05em] no-underline">
                   Qualanod Licenced CE Certified
                 </p>
               </div>
             </div>
-            <div className="flex gap-[360px] ">
-              <div className="flex flex-col items-center w-[383px]">
-                <img src="/billets.svg" alt="billets" />
-                <p className="font-rubik text-[24px] font-normal leading-[90px] tracking-[-0.05em] no-underline">
+            <div className="flex gap-[38px] sm:gap-[360px] justify-between sm:justify-unset">
+              <div className="flex flex-col items-center sm:w-[383px]">
+                <img
+                  src="/billets.svg"
+                  alt="billets"
+                  className="w-[46px] sm:w-auto"
+                />
+                <p className="font-rubik text-[12px] sm:text-[24px] font-normal sm:leading-[90px] tracking-[-0.05em] no-underline">
                   Low Carbon Billets
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <img src="/FPC.svg" alt="FPC" />
-                <p className="font-rubik text-[24px] font-normal tracking-[-0.05em] no-underline text-center">
+                <img src="/FPC.svg" alt="FPC" className="w-[46px] sm:w-auto" />
+                <p className="font-rubik text-[12px] sm:text-[24px] font-normal tracking-[-0.05em] no-underline text-center">
                   FPC Certified Technoform Thermal
                   <br /> Break Assembly Quality Certified
                 </p>
               </div>
             </div>
-            <div className="flex gap-[360px] ">
-              <div className="flex flex-col items-center w-[383px]">
-                <img src="/ISO.svg" alt="ISO" />
-                <p className="font-rubik text-[24px] font-normal leading-[90px] tracking-[-0.05em] no-underline">
+            <div className="flex gap-[38px] sm:gap-[360px] justify-between sm:justify-unset">
+              <div className="flex flex-col items-center sm:w-[383px]">
+                <img src="/ISO.svg" alt="ISO" className="w-[46px] sm:w-auto" />
+                <p className="font-rubik text-[12px] sm:text-[24px] font-normal sm:leading-[90px] tracking-[-0.05em] no-underline">
                   ISO 9001/14001/45001 Certified
                 </p>
               </div>
               <div className="flex flex-col items-center">
-                <img src="/qualicoat.svg" alt="qualicoat" />
-                <p className="font-rubik text-[24px] font-normal leading-[90px] tracking-[-0.05em] no-underline text-center">
+                <img
+                  src="/qualicoat.svg"
+                  alt="qualicoat"
+                  className="w-[46px] sm:w-auto"
+                />
+                <p className="font-rubik text-[12px] sm:text-[24px] font-normal sm:leading-[90px] tracking-[-0.05em] no-underline text-center">
                   Qualicoat Seaside Licenced Applicator
                 </p>
               </div>
             </div>
             <div className="flex flex-col items-center">
-              <img src="/lowPrice.svg" alt="lowPrice" />
-              <p className="font-rubik text-[24px] font-normal leading-[90px] tracking-[-0.05em] no-underline text-center">
+              <img
+                src="/lowPrice.svg"
+                alt="lowPrice"
+                className="w-[46px] sm:w-auto"
+              />
+              <p className="font-rubik text-[12px] sm:text-[24px] font-normal sm:leading-[90px] tracking-[-0.05em] no-underline text-center">
                 Low Prices
               </p>
             </div>
@@ -289,22 +322,26 @@ export default async function Home() {
 
       {/* Join The Green moment Section start */}
       <div className="flex bg-[#64CE5B] justify-between">
-        <div className="p-[72px_112px]">
+        <div className="p-[36px_12px] sm:p-[72px_112px]">
           <div>
-            <p className="font-raleway text-[78px] font-normal leading-[68px] tracking-[-0.03em] text-left no-underline tex-[#262626]">
+            <p className="font-raleway test-[14px] sm:text-[78px] font-normal sm:leading-[68px] tracking-[-0.03em] text-left no-underline tex-[#262626]">
               Join the green <br /> movement
             </p>
-            <p className="font-rubik text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-left no-underline text-white mt-[24px]">
+            <p className="font-rubik text-[8px] sm:text-[18px] font-normal leading-[11px] sm:leading-[26px] tracking-[-0.004em] text-left no-underline text-white mt-[24px]">
               Through sustainable aluminium production, we are shaping a
               cleaner,
               <br /> greener, and healthier planet.
             </p>
-            <button className="bg-[#445ae0] rounded-[200px] p-[16px_24px] font-figtree text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline text-white mt-[40px]">
+            <button className="bg-[#445ae0] rounded-[200px] p-[6px_24px] sm:p-[16px_24px] font-figtree text-[11px] sm:text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline text-white mt-[40px]">
               Get in touch
             </button>
           </div>
         </div>
-        <img src="/JoinGreen.png" alt="green" className="w-[45%] h-[452px]" />
+        <img
+          src="/JoinGreen.png"
+          alt="green"
+          className="w-[45%] sm:h-[452px]"
+        />
       </div>
       {/* Join The Green moment Section end */}
 
