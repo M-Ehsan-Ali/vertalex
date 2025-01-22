@@ -38,8 +38,8 @@ const MovingImages: React.FC<MovingImagesProps> = ({
       {/* Left Arrow */}
       <img
         onClick={goToPreviousImage}
-        src="/testimonials/left_arrow.svg"
-        className="w-[24px] md:w-[60px] absolute left-4 z-10 text-white bg-black/50 rounded-[10px] cursor-pointer hover:bg-black/70 transition"
+        src="/left_arrow.svg"
+        className="w-[24px] md:w-[32px] absolute right-[40px] bottom-[0px] z-10 text-white bg-black/60 cursor-pointer hover:bg-black/100 transition rounded-full"
         alt="Previous"
       />
 
@@ -60,8 +60,8 @@ const MovingImages: React.FC<MovingImagesProps> = ({
       {/* Right Arrow */}
       <img
         onClick={goToNextImage}
-        src="/testimonials/right_arrow.svg"
-        className="w-[24px] md:w-[60px] absolute right-4 z-10 text-white bg-black/50 rounded-[10px] hover:bg-black/70 cursor-pointer transition"
+        src="/right_arrow.svg"
+        className="w-[24px] md:w-[32px] absolute right-[0px] bottom-[0px] z-10 text-white bg-black/60 hover:bg-black/100 cursor-pointer transition rounded-full"
         alt="Next"
       />
     </div>
