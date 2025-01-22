@@ -1,6 +1,6 @@
 <svg width="300" height="50" viewBox="0 0 300 50" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- First SVG -->
-  <g transform="scale(1.5)">
+  <g transform="scale(1.7)">
     <path d="M10.6592 1.5271L30.7148 21.5291L41.0302 11.1592H49.9895L30.9613 30.3825L10.6592 10.3395" fill="#262626"/>
     <path d="M9.59085 0.871338H0.261719V10.0526H9.59085V0.871338Z" fill="#262626"/>
     <path d="M40.3732 1.5271V10.3395L30.9619 19.7666L26.5645 15.4629L40.3732 1.5271Z" fill="#64CE5B"/>

@@ -32,7 +32,7 @@ export default function Header() {
           <div className="hidden lg:flex gap-x-5 justify-center">
             <div>
               <Link
-                href={"/"}
+                href={"#why-us"}
                 className="font-rubik text-[16px] font-medium leading-6 tracking-tight text-center decoration-skip-ink"
               >
                 Why us
@@ -40,7 +40,7 @@ export default function Header() {
             </div>
             <div>
               <Link
-                href={"/projects"}
+                href={"#our-projects"}
                 className="font-rubik text-[16px] font-medium leading-6 tracking-tight text-center decoration-skip-ink"
               >
                 Our Projects
@@ -48,7 +48,7 @@ export default function Header() {
             </div>
             <div>
               <Link
-                href={"/news"}
+                href={"#in-news"}
                 className="font-rubik text-[16px] font-medium leading-6 tracking-tight text-center decoration-skip-ink"
               >
                 News

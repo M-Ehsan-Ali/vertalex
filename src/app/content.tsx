@@ -1,54 +1,8 @@
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
+import MovingImages from "./MovingImages";
 import Testimonials from "./Testimonials/page";
 
-export const ourProjects = [
-  {
-    imageSrc: "/consortPalace.png",
-    title: "CONSORT PLACE  CANARY WHARF, UK",
-    color: "64ce5b",
-    description:
-      "A three tower mixed-use development in the heart of Canary Wharf comprising buildings of 65, 35 & 20 storeys. Crofton MEA supplied approx. 500 MT across 50 dies with thermal breaks, powder coating, anodizing and mill finish for the facades of these buildings.",
-  },
-  {
-    imageSrc: "/projectOctagon.png",
-    title: "OCTAGON BIRMINGHAM, UK",
-    color: "ffffff",
-    description:
-      "A 49 storey landmark residential tower in Birmingham city, UK. We are currently supplying 32 dies, with thermal breaks, powder coating, anodizing and mill finish for the facade of this building.",
-  },
-  {
-    imageSrc: "/construction.png",
-    title: "CONSTRUCTION & INDUSTRIAL",
-    color: "445ae0",
-    description:
-      "A three tower mixed-use development in the heart of Canary Wharf comprising buildings of 65, 35 & 20 storeys. Crofton MEA supplied approx. 500 MT across 50 dies with thermal breaks, powder coating, anodizing and mill finish for the facades of these buildings.",
-  },
-];
-
-export const ourNews = [
-  {
-    imageSrc: "/newsInnovation.png",
-    userName: "Wade Warren",
-    userImage: "/userImage.png",
-    readTime: "7 min read",
-    description: "Aluminum: A Spark of Innovation for Sustainable Solutions.",
-  },
-  {
-    imageSrc: "/newsInnovation.png",
-    userName: "Jenny Wilson",
-    userImage: "/userImage.png",
-    readTime: "12 min read",
-    description: "Aluminum: A Spark of Innovation for Sustainable Solutions.",
-  },
-  {
-    imageSrc: "/newsInnovation.png",
-    userName: "Leslie Alexander",
-    userImage: "/userImage.png",
-    readTime: "5 min read",
-    description: "Aluminum: A Spark of Innovation for Sustainable Solutions.",
-  },
-];
-
+// new interface start
 interface UserImage {
   id: string;
   sourceUrl: string;
@@ -78,7 +32,19 @@ interface GetNewsResponse {
   news: any;
   nodes: NewsNode[];
 }
+// new interface end
+
+// moving image content
+
+const images = [
+  "/heroOne.jpeg",
+  "heroTwo.jpeg",
+  "heroThree.jpeg",
+  "heroFour.jpeg",
+  "heroFive.jpeg",
+];
 export default async function Home() {
+  // news api and data fetch starts here
   const newsQuery = `
   query GetNews {
    news {
@@ -105,7 +71,8 @@ export default async function Home() {
 
   try {
     const news: GetNewsResponse = await fetchGraphQL(newsQuery);
-    newsData = news?.news.nodes.map((node: any) => ({
+    newsData = news?.news.nodes.map((node: any, index: any) => ({
+      key: index,
       title: node.New.title,
       about: node.New.about,
       description: node.New.description,
@@ -117,11 +84,43 @@ export default async function Home() {
   } catch (error) {
     console.error("Error fetching news:", error);
   }
-
+  // setting last element of news to show bigger
   const lastElement: any = newsData[newsData.length - 1];
+  // separating about by comma
   const aboutParts: any = lastElement.about
     .split(",")
     .map((part: any) => part.trim());
+  // news api and data fetch ends here
+  const projectsQuery = `
+  query GetProjects {
+  projects {
+    nodes {
+      projects {
+        color
+        description
+        title
+        image {
+          id
+          sourceUrl
+        }
+      }
+    }
+  }
+}`;
+
+  let projectData: any[] = [];
+  try {
+    const projects: any = await fetchGraphQL(projectsQuery);
+    projectData = projects?.projects.nodes.map((node: any, index: any) => ({
+      key: index,
+      title: node.projects.title,
+      description: node.projects.description,
+      image: node.projects.image,
+      color: node.projects.color,
+    }));
+  } catch (error) {
+    console.error("Error fetching news:", error);
+  }
   return (
     <div id="home">
       {/* Hero Section start */}
@@ -152,12 +151,15 @@ export default async function Home() {
           </div>
         </div>
         <div className="w-full sm:w-[40%] bg-[#64CE5B] sm:p-[12px] relative">
-          <img
+          <MovingImages images={images} interval={4000} />
+          {/* <img
             src="/heroImage.png"
             alt="hero"
             className="w-full rounded-[50%]"
-          />
-          <div className="w-fit rounded rounded-[12px] p-[8px] bg-white absolute bottom-[45px] left-[-45px] border border-[#f5f4f4] shadow-[0px_24px_32px_-12px_#364A363D]">
+          /> */}
+
+          {/* Dont delete this code we need to add this bellow comment section */}
+          {/* <div className="w-fit rounded rounded-[12px] p-[8px] bg-white absolute bottom-[45px] left-[-45px] border border-[#f5f4f4] shadow-[0px_24px_32px_-12px_#364A363D]">
             <div className="flex gap-[18px] items-center">
               <img src="/aluminiumIcon.png" alt="Aluminium" />
               <p className="font-raleway text-[24px] font-black leading-[20px] tracking-[-0.004em] text-left decoration-skip-ink">
@@ -177,7 +179,7 @@ export default async function Home() {
                 3-month Closing Price (day-delayed)
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* Hero section end */}
@@ -195,6 +197,7 @@ export default async function Home() {
 
       {/* Why us Section start */}
       <div
+        id={"why-us"}
         className="relative pl-[52px] pb-[70px]"
         style={{
           backgroundImage: `url('/whyUsMain.png')`,
@@ -306,19 +309,19 @@ export default async function Home() {
       {/* Join The Green moment Section end */}
 
       {/* Our Project Section start */}
-      <div className="flex flex-col items-center mt-[175px]">
+      <div className="flex flex-col items-center mt-[175px]" id="our-projects">
         <div className="w-fit p-[7px_62px] rounded-[10px] bg-[#64ce5b]">
           <p className="font-raleway text-[70px] font-normal leading-[90px] tracking-[-0.05em] text-left no-underline text-white">
             Our Projects
           </p>
         </div>
         <div className="mt-[165px] flex gap-[56px]">
-          {ourProjects?.map((item) => (
-            <div className="bg-[#d6f1cf] w-[380px] rounded-[20px]">
+          {projectData?.map((item, index) => (
+            <div key={index} className="bg-[#d6f1cf] w-[380px] rounded-[20px]">
               <div className="relative">
                 <img
-                  src={item.imageSrc}
-                  alt={item.imageSrc}
+                  src={item.image.sourceUrl}
+                  alt={item.image.id}
                   className="w-[380px] h-[375px]"
                 />
                 <div
@@ -344,8 +347,8 @@ export default async function Home() {
       {/* Our Project Section end */}
       <img src="/aboveNews.png" alt="png" className="mt-[121px] mb-[100px]" />
 
-      {/* New section start */}
-      <div className="px-[112px]">
+      {/* News section start */}
+      <div className="px-[112px]" id={"in-news"}>
         <div className="flex justify-between items-center">
           <p className="font-raleway text-[62px] font-medium leading-[68px] tracking-[-0.03em] text-left no-underline">
             News
@@ -393,8 +396,8 @@ export default async function Home() {
             </div>
           </div>
           <div className="w-[41%] flex flex-col gap-[32px]">
-            {newsData?.map((item) => (
-              <div className="flex gap-[32px]">
+            {newsData?.map((item, index) => (
+              <div key={index} className="flex gap-[32px]">
                 <img
                   src={item.image.sourceUrl}
                   alt={item.image.id}
@@ -424,7 +427,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      {/* New Section end */}
+      {/* News Section end */}
 
       {/* Testimonial Section start */}
       <Testimonials />
