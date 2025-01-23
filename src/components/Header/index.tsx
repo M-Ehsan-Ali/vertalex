@@ -1,8 +1,16 @@
 "use client";
 import Image from "next/legacy/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Header() {
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    window.innerWidth <= 500 ? setWidth(120) : setWidth(270);
+    window.innerWidth <= 500 ? setHeight(20) : setHeight(50);
+  }, [width, height]);
   return (
     <div>
       <div className="relative">
@@ -13,8 +21,8 @@ export default function Header() {
             <div className="flex flex-col justify-center items-center">
               <Image
                 src="/logo-light.svg"
-                height={window.innerWidth <= 500 ? 20 : 50}
-                width={window.innerWidth <= 500 ? 120 : 270}
+                width={width}
+                height={height}
                 alt="vertalex"
                 className="mt-[8px]"
               />
