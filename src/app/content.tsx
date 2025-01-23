@@ -1,6 +1,7 @@
 import { fetchGraphQL } from "@/utils/fetchGraphQL";
 import MovingImages from "./MovingImages";
 import Testimonials from "./Testimonials/page";
+import ProjectSlider from "./ourProjects";
 
 // new interface start
 interface UserImage {
@@ -346,56 +347,36 @@ export default async function Home() {
       {/* Join The Green moment Section end */}
 
       {/* Our Project Section start */}
-      <div className="flex flex-col items-center mt-[175px]" id="our-projects">
-        <div className="w-fit p-[7px_62px] rounded-[10px] bg-[#64ce5b]">
-          <p className="font-raleway text-[70px] font-normal leading-[90px] tracking-[-0.05em] text-left no-underline text-white">
+      <div
+        className="flex flex-col items-center mt-[50px] sm:mt-[175px]"
+        id="our-projects"
+      >
+        <div className="w-fit p-[8px_12px]  sm:p-[7px_62px] rounded-[10px] bg-[#64ce5b]">
+          <p className="font-raleway text-[17px] sm:text-[70px] font-normal sm:leading-[90px] tracking-[-0.05em] text-left no-underline text-white">
             Our Projects
           </p>
         </div>
-        <div className="mt-[165px] flex gap-[56px]">
-          {projectData?.map((item, index) => (
-            <div key={index} className="bg-[#d6f1cf] w-[380px] rounded-[20px]">
-              <div className="relative">
-                <img
-                  src={item.image.sourceUrl}
-                  alt={item.image.id}
-                  className="w-[380px] h-[375px]"
-                />
-                <div
-                  className="w-[48px] h-[100px] rounded-[20px] absolute top-[32px] left-[24px]"
-                  style={{
-                    background: item.color ? `#${item.color}` : "#FFFFFF",
-                  }}
-                ></div>
-              </div>
-
-              <div className="p-[32px]">
-                <p className="font-raleway text-[22px] font-bold leading-[30px] text-left no-underline w-[249px]">
-                  {item.title}
-                </p>
-                <p className="mt-[12px] font-['Plus_Jakarta_Sans'] text-[16px] font-normal leading-[30px] text-left no-underline text-[#727272]">
-                  {item.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ProjectSlider projectData={projectData} />
       </div>
       {/* Our Project Section end */}
-      <img src="/aboveNews.png" alt="png" className="mt-[121px] mb-[100px]" />
+      <img
+        src="/aboveNews.png"
+        alt="png"
+        className="w-[50%] sm:w-auto mt-[76px] mb-[54px] sm:mt-[121px] sm:mb-[100px]"
+      />
 
       {/* News section start */}
-      <div className="px-[112px]" id={"in-news"}>
+      <div className="px-[16px] sm:px-[112px]" id={"in-news"}>
         <div className="flex justify-between items-center">
-          <p className="font-raleway text-[62px] font-medium leading-[68px] tracking-[-0.03em] text-left no-underline">
+          <p className="font-raleway text-[24px] sm:text-[62px] font-medium sm:leading-[68px] tracking-[-0.03em] text-left no-underline">
             News
           </p>
-          <button className="p-[16px_24px] rounded-[200px] border border-[#64ce5b] flex items-center gap-[8px] font-figtree text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline">
+          <button className="p-[6px_12px] sm:p-[16px_24px] rounded-[200px] border border-[#64ce5b] flex items-center gap-[8px] font-figtree text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline">
             See All <img src={`/tailIcon.svg`} alt="Tail" />
           </button>
         </div>
-        <div className="mt-[88px] flex justify-between gap-[32px]">
-          <div className="w-[60%]">
+        <div className="mt-[88px] flex flex-col sm:flex-row justify-between gap-[32px]">
+          <div className="sm:w-[60%]">
             <img
               src={lastElement.image.sourceUrl}
               alt={lastElement.image.id}
@@ -411,13 +392,13 @@ export default async function Home() {
                 </div>
               ))}
             </div>
-            <p className="font-roboto text-[45px] font-normal leading-[52px] text-[#1d1f1e] text-left no-underline mt-[24px]">
+            <p className="font-roboto text-[24px] sm:text-[45px] font-normal sm:leading-[52px] text-[#1d1f1e] text-center sm:text-left no-underline mt-[24px]">
               {lastElement.title}
             </p>
             <p className="font-figtree text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-left no-underline text-[#646a69] mt-[24px]">
               {lastElement.description}
             </p>
-            <div className="flex gap-[16px] items-center mt-[24px]">
+            <div className="flex gap-[16px] justify-center sm:justify-start items-center mt-[24px]">
               <img
                 src={lastElement.userimage.sourceUrl}
                 alt={lastElement.userimage.id}
@@ -432,29 +413,29 @@ export default async function Home() {
               </p>
             </div>
           </div>
-          <div className="w-[41%] flex flex-col gap-[32px]">
+          <div className="sm:w-[41%] flex flex-col gap-[16px] sm:gap-[32px] mt-[42px] sm:mt-[0px]">
             {newsData?.map((item, index) => (
-              <div key={index} className="flex gap-[32px]">
+              <div key={index} className="flex gap-[12px] sm:gap-[32px]">
                 <img
                   src={item.image.sourceUrl}
                   alt={item.image.id}
-                  className="w-[177px] h-[177px] rounded-[16px]"
+                  className="w-[120px] sm:w-[177px] h-[120px] sm:h-[177px] rounded-[16px]"
                 />
                 <div>
-                  <p className="font-figtree text-[24px] font-medium leading-[36px] tracking-[-0.01em] text-left no-underline">
+                  <p className="font-figtree text-[14px] sm:text-[24px] font-medium sm:leading-[36px] tracking-[-0.01em] text-center sm:text-left no-underline">
                     {item.title}
                   </p>
-                  <div className="flex gap-[16px] items-center mt-[24px]">
+                  <div className="flex gap-[10px] sm:gap-[16px] items-center mt-[24px]">
                     <img
                       src={item.userimage.sourceUrl}
                       alt={item.userimage.id}
                       className="w-[32px] h-[32px] rounded-[50%]"
                     />
-                    <p className="font-figtree text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
+                    <p className="font-figtree text-[11px] sm:text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
                       {item.username}
                     </p>
-                    <div className="w-[4px] h-[4px] bg-[#929c9a]"></div>
-                    <p className="font-figtree text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
+                    <div className="hidden sm:block w-[4px] h-[4px] bg-[#929c9a]"></div>
+                    <p className="font-figtree text-[11px] sm:text-[14px] font-medium leading-[20px] tracking-[-0.004em] text-left no-underline">
                       {item.readtime}
                     </p>
                   </div>
@@ -471,19 +452,18 @@ export default async function Home() {
       {/* Testimonial Section end */}
 
       {/* Source for Aluminium Section start */}
-      <div className="p-[64px_96px] bg-[#54ce5b] mt-[170px]">
-        <div className="flex justify-between items-center">
-          <p className="font-Raleway text-[62px] font-medium leading-[68px] tracking-[-0.03em] text-left no-underline text-white">
-            Your Source For
-            <br /> Aluminum Updates
+      <div className="p-[18px_50px] sm:p-[64px_96px] bg-[#54ce5b] mt-[56px] sm:mt-[170px]">
+        <div className="flex flex-col gap-[24px] sm:flex-row justify-between items-center">
+          <p className="sm:w-[540px] font-Raleway text-[16px] sm:text-[62px] font-medium sm:leading-[68px] tracking-[-0.03em] text-left no-underline text-white">
+            Your Source For Aluminum Updates
           </p>
           <div className="flex gap-[8px]">
             <input
               type="text"
-              className="w-[330px] shadow-[0px_1px_2px_0px_#022C2214] p-[16px_20px] rounded-[200px] font-figtree text-base font-normal leading-6 tracking-tighter text-left text-[#646a69]"
+              className="sm:w-[330px] shadow-[0px_1px_2px_0px_#022C2214] p-[10px_18px] sm:p-[16px_20px] rounded-[200px] font-figtree text-[12px] sm:text-base font-normal sm:leading-6 tracking-tighter text-left text-[#646a69]"
               placeholder="Your e-mail..."
             />
-            <button className="bg-[#445ae0] p-[16px_32px] rounded-[200px] font-figtree text-lg font-medium leading-6 tracking-tighter text-left text-white cursor-pointer">
+            <button className="whitespace-nowrap bg-[#445ae0] p-[8px_16px] sm:p-[16px_32px] rounded-[200px] font-figtree text-[13px] sm:text-lg font-medium sm:leading-6 tracking-tighter text-left text-white cursor-pointer">
               Get in touch
             </button>
           </div>

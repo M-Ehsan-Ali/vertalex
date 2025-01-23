@@ -47,17 +47,17 @@ export default function Content({ testimonials }: ContentProps) {
 
   return (
     <>
-      <div className="px-[112px] w-full relative flex items-center justify-between md:min-h-[450px] gap-[72px]">
+      <div className="px-[16px] sm:px-[112px] w-full relative flex items-center justify-between md:min-h-[450px] gap-[16px] sm:gap-[72px]">
         {/* Left Arrow */}
         <div className="cursor-pointer" onClick={handlePrevious}>
           <img
             src="/testimonials/left_arrow.svg"
-            className="w-[24px] md:w-[60px]"
+            className="w-[12px] md:w-[60px]"
             alt="Previous"
           />
         </div>
         {/* Dynamic Review */}
-        <div className="bg-[#d6f1cf] w-[80%] rounded-[16px] p-[48px_64px]">
+        <div className="bg-[#d6f1cf] w-[80%] rounded-[16px] p-[6px_64px] sm:p-[48px_64px]">
           <div className="flex justify-center">
             <img src="/testimonials/star.svg" alt="rating" />
             <img src="/testimonials/star.svg" alt="rating" />
@@ -67,7 +67,7 @@ export default function Content({ testimonials }: ContentProps) {
           </div>
           <div
             className={clsx(
-              "font-figtree text-[32px] font-medium leading-[40px] tracking-[-0.01em] text-center no-underline text-[#1d1f1e] mt-[24px]",
+              "font-figtree text-[10px] sm:text-[32px] font-medium sm:leading-[40px] tracking-[-0.01em] text-center no-underline text-[#1d1f1e] mt-[24px]",
               transitioning ? "opacity-0" : "opacity-100"
             )}
           >
@@ -75,10 +75,10 @@ export default function Content({ testimonials }: ContentProps) {
           </div>
           {/* Dynamic Title and Designation */}
           <div className="col-span-3">
-            <div className="font-figtree text-[20px] font-medium leading-[24px] tracking-[-0.01em] text-center no-underline text-[#1d1f1e] mt-[40px]">
+            <div className="font-figtree text-[12px] sm:text-[20px] font-medium leading-[24px] tracking-[-0.01em] text-center no-underline text-[#1d1f1e] mt-[40px]">
               {currentTestimonial.title}
             </div>
-            <div className="font-figtree text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center no-underline text-[#646a69] mt-[8px]">
+            <div className="font-figtree text-[12px] sm:text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center no-underline text-[#646a69] mt-[8px]">
               {`${currentTestimonial.designation}`}
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function Content({ testimonials }: ContentProps) {
         <div className="cursor-pointer" onClick={handleNext}>
           <img
             src="/testimonials/right_arrow.svg"
-            className="w-[24px] md:w-[60px]"
+            className="w-[12px] md:w-[60px]"
             alt="Next"
           />
         </div>
