@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default function FooterNav() {
+  const currentYear = new Date().getFullYear();
   return (
     <>
       <div className="mt-[32px] p-[42px_18px_24px] sm:p-[100px_112px_56px] flex justify-between">
@@ -70,14 +71,14 @@ export default function FooterNav() {
         <div className="hidden sm:flex flex-col justify-end">
           <img src="/footerLogo.svg" alt="footerlogo" />
           <p className="font-figtree text-sm font-normal leading-5 tracking-tight text-left decoration-from-font text-[#646A69]">
-            © 2024 Vertalex All rights reserved.
+            © {currentYear} Vertalex All rights reserved.
           </p>
         </div>
       </div>
       <div className="flex sm:hidden flex-col justify-center items-center mb-[24px]">
         <img src="/footerLogo.svg" alt="footerlogo" className="w-[90px]" />
         <p className="font-figtree text-sm font-normal leading-5 tracking-tight text-left decoration-from-font text-[#646A69]">
-          © 2024 Vertalex All rights reserved.
+          © {currentYear} Vertalex All rights reserved.
         </p>
       </div>
     </>

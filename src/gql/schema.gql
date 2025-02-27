@@ -831,9 +831,6 @@ input CategoryToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -943,7 +940,6 @@ input CategoryToContentNodeConnectionWhereArgs {
   title: String
 }
 
-""""""
 input CategoryToContentNodeConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: CategoryToContentNodeConnectionWhereArgsMetaCompareEnum
@@ -975,7 +971,6 @@ enum CategoryToContentNodeConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input CategoryToContentNodeConnectionWhereArgsMetaQuery {
   metaArray: [CategoryToContentNodeConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -1154,7 +1149,6 @@ input CategoryToPostConnectionWhereArgs {
   title: String
 }
 
-""""""
 input CategoryToPostConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: CategoryToPostConnectionWhereArgsMetaCompareEnum
@@ -1186,7 +1180,6 @@ enum CategoryToPostConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input CategoryToPostConnectionWhereArgsMetaQuery {
   metaArray: [CategoryToPostConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -1583,8 +1576,8 @@ input CommentToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -1730,8 +1723,8 @@ input CommentToParentCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -2382,6 +2375,9 @@ enum ContentTypeEnum {
   POST
 
   """The Type of Content object"""
+  PROJECTS
+
+  """The Type of Content object"""
   TESTIMONIALS
 }
 
@@ -2501,7 +2497,6 @@ input ContentTypeToContentNodeConnectionWhereArgs {
   title: String
 }
 
-""""""
 input ContentTypeToContentNodeConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: ContentTypeToContentNodeConnectionWhereArgsMetaCompareEnum
@@ -2533,7 +2528,6 @@ enum ContentTypeToContentNodeConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input ContentTypeToContentNodeConnectionWhereArgsMetaQuery {
   metaArray: [ContentTypeToContentNodeConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -2670,7 +2664,14 @@ input CreateCategoryInput {
   """The name of the category object to mutate"""
   name: String!
 
-  """The ID of the category that should be set as the parent"""
+  """
+  The database ID of the category that should be set as the parent. This field cannot be used in conjunction with parentId
+  """
+  parentDatabaseId: Int
+
+  """
+  The ID of the category that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId
+  """
   parentId: ID
 
   """
@@ -2692,9 +2693,6 @@ type CreateCategoryPayload {
 
 """Input for the createComment mutation."""
 input CreateCommentInput {
-  """The approval status of the comment."""
-  approved: String
-
   """The name of the comment's author."""
   author: String
 
@@ -3006,6 +3004,50 @@ type CreatePostPayload {
 
   """The Post object mutation type."""
   post: Post
+}
+
+"""Input for the createProject mutation."""
+input CreateProjectInput {
+  """
+  This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """The content of the object"""
+  content: String
+
+  """
+  The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17 
+  """
+  date: String
+
+  """
+  A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types.
+  """
+  menuOrder: Int
+
+  """The password used to protect the content of the object"""
+  password: String
+
+  """The slug of the object"""
+  slug: String
+
+  """The status of the object"""
+  status: PostStatusEnum
+
+  """The title of the object"""
+  title: String
+}
+
+"""The payload for the createProject mutation."""
+type CreateProjectPayload {
+  """
+  If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """The Post object mutation type."""
+  project: Project
 }
 
 """Input for the createTag mutation."""
@@ -3469,6 +3511,39 @@ type DeletePostPayload {
   post: Post
 }
 
+"""Input for the deleteProject mutation."""
+input DeleteProjectInput {
+  """
+  This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """
+  Whether the object should be force deleted instead of being moved to the trash
+  """
+  forceDelete: Boolean
+
+  """The ID of the Project to delete"""
+  id: ID!
+
+  """Override the edit lock when another user is editing the post"""
+  ignoreEditLock: Boolean
+}
+
+"""The payload for the deleteProject mutation."""
+type DeleteProjectPayload {
+  """
+  If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """The ID of the deleted object"""
+  deletedId: ID
+
+  """The object before it was deleted"""
+  project: Project
+}
+
 """Input for the deleteTag mutation."""
 input DeleteTagInput {
   """
@@ -3599,6 +3674,9 @@ interface EnqueuedAsset {
   """Extra information needed for the script"""
   extra: String @deprecated(reason: "Use `EnqueuedScript.extraData` instead.")
 
+  """The loading group to which this asset belongs."""
+  group: Int
+
   """The handle of the enqueued asset"""
   handle: String
 
@@ -3636,6 +3714,12 @@ type EnqueuedScript implements EnqueuedAsset & Node {
 
   """Extra data supplied to the enqueued script"""
   extraData: String
+
+  """The loading group to which this asset belongs."""
+  group: Int
+
+  """The location where this script should be loaded"""
+  groupLocation: ScriptLoadingGroupLocationEnum
 
   """The handle of the enqueued asset"""
   handle: String
@@ -3719,6 +3803,9 @@ type EnqueuedStylesheet implements EnqueuedAsset & Node {
 
   """Extra information needed for the script"""
   extra: String @deprecated(reason: "Use `EnqueuedScript.extraData` instead.")
+
+  """The loading group to which this asset belongs."""
+  group: Int
 
   """The handle of the enqueued asset"""
   handle: String
@@ -4132,7 +4219,6 @@ input HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs {
   title: String
 }
 
-""""""
 input HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgsMetaCompareEnum
@@ -4164,7 +4250,6 @@ enum HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgsMetaCompare
   NOT_LIKE
 }
 
-""""""
 input HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgsMetaQuery {
   metaArray: [HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -4293,7 +4378,6 @@ input HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs {
   title: String
 }
 
-""""""
 input HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgsMetaCompareEnum
@@ -4325,7 +4409,6 @@ enum HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgsMetaCompareE
   NOT_LIKE
 }
 
-""""""
 input HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgsMetaQuery {
   metaArray: [HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -4473,6 +4556,9 @@ interface HierarchicalTermNode implements DatabaseIdentifier & HierarchicalNode 
 type MediaDetails {
   """The filename of the mediaItem"""
   file: String
+
+  """The path to the mediaItem relative to the uploads directory"""
+  filePath: String
 
   """The height of the mediaItem"""
   height: Int
@@ -4662,6 +4748,20 @@ type MediaItem implements ContentNode & DatabaseIdentifier & HierarchicalContent
     """The number of items to return before the referenced "before" cursor"""
     last: Int
   ): ContentNodeToEnqueuedStylesheetConnection
+
+  """
+  The filename of the mediaItem for the specified size (default size is full)
+  """
+  file(
+    """Size of the MediaItem to return"""
+    size: MediaItemSizeEnum
+  ): String
+
+  """The path to the original file relative to the uploads directory"""
+  filePath(
+    """Size of the MediaItem to return"""
+    size: MediaItemSizeEnum
+  ): String
 
   """The filesize in bytes of the resource"""
   fileSize(
@@ -5073,8 +5173,8 @@ input MediaItemToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -5084,6 +5184,9 @@ input MediaItemToCommentConnectionWhereArgs {
 type MediaSize {
   """The filename of the referenced size"""
   file: String
+
+  """The path of the file for the referenced size (default size is full)"""
+  filePath: String
 
   """The filesize of the resource"""
   fileSize: Int
@@ -5384,7 +5487,7 @@ enum MenuItemNodeIdTypeEnum {
 }
 
 """Deprecated in favor of MenuItemLinkeable Interface"""
-union MenuItemObjectUnion = Abc | Category | New | Page | Post | Tag | Testimonial
+union MenuItemObjectUnion = Abc | Category | New | Page | Post | Project | Tag | Testimonial
 
 """Connection between the MenuItem type and the Menu type"""
 type MenuItemToMenuConnectionEdge implements Edge & MenuConnectionEdge & OneToOneConnection {
@@ -6930,8 +7033,8 @@ input PageToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -7064,7 +7167,6 @@ input PageToRevisionConnectionWhereArgs {
   title: String
 }
 
-""""""
 input PageToRevisionConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: PageToRevisionConnectionWhereArgsMetaCompareEnum
@@ -7096,7 +7198,6 @@ enum PageToRevisionConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input PageToRevisionConnectionWhereArgsMetaQuery {
   metaArray: [PageToRevisionConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -7487,6 +7588,11 @@ type Post implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node 
 
   """Whether the object is a node in the preview state"""
   previewRevisionId: ID
+
+  """
+  Added to the GraphQL Schema because the ACF Field Group &quot;projects&quot; was set to Show in GraphQL.
+  """
+  projects: Post_Projects
 
   """
   If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node.
@@ -7976,7 +8082,6 @@ input PostFormatToContentNodeConnectionWhereArgs {
   title: String
 }
 
-""""""
 input PostFormatToContentNodeConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: PostFormatToContentNodeConnectionWhereArgsMetaCompareEnum
@@ -8008,7 +8113,6 @@ enum PostFormatToContentNodeConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input PostFormatToContentNodeConnectionWhereArgsMetaQuery {
   metaArray: [PostFormatToContentNodeConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -8176,7 +8280,6 @@ input PostFormatToPostConnectionWhereArgs {
   title: String
 }
 
-""""""
 input PostFormatToPostConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: PostFormatToPostConnectionWhereArgsMetaCompareEnum
@@ -8208,7 +8311,6 @@ enum PostFormatToPostConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input PostFormatToPostConnectionWhereArgsMetaQuery {
   metaArray: [PostFormatToPostConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -8550,9 +8652,6 @@ input PostToCategoryConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -8691,8 +8790,8 @@ input PostToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -8870,9 +8969,6 @@ input PostToPostFormatConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9040,7 +9136,6 @@ input PostToRevisionConnectionWhereArgs {
   title: String
 }
 
-""""""
 input PostToRevisionConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: PostToRevisionConnectionWhereArgsMetaCompareEnum
@@ -9072,7 +9167,6 @@ enum PostToRevisionConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input PostToRevisionConnectionWhereArgsMetaQuery {
   metaArray: [PostToRevisionConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -9210,9 +9304,6 @@ input PostToTagConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9342,9 +9433,6 @@ input PostToTermNodeConnectionWhereArgs {
   taxonomies: [TaxonomyEnum]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -9429,6 +9517,24 @@ type PostTypeLabelDetails {
   viewItems: String
 }
 
+"""Field Group"""
+type Post_Projects implements AcfFieldGroup {
+  """"""
+  color: String
+
+  """"""
+  description: String
+
+  """The name of the ACF Field Group"""
+  fieldGroupName: String
+
+  """"""
+  image: MediaItem
+
+  """"""
+  title: String
+}
+
 """Nodes that can be seen in a preview (unpublished) state."""
 interface Previewable {
   """Whether the object is a node in the preview state"""
@@ -9439,6 +9545,349 @@ interface Previewable {
 
   """Whether the object is a node in the preview state"""
   previewRevisionId: ID
+}
+
+"""The Project type"""
+type Project implements ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable {
+  """The ancestors of the content node."""
+  ancestors(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): ProjectToProjectConnection @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The content of the post."""
+  content(
+    """Format of the field output"""
+    format: PostObjectFieldFormatEnum
+  ): String
+
+  """Connection between the ContentNode type and the ContentType type"""
+  contentType: ContentNodeToContentTypeConnectionEdge
+
+  """The name of the Content Type the node belongs to"""
+  contentTypeName: String!
+
+  """The unique identifier stored in the database"""
+  databaseId: Int!
+
+  """Post publishing date."""
+  date: String
+
+  """The publishing date set in GMT."""
+  dateGmt: String
+
+  """The desired slug of the post"""
+  desiredSlug: String
+
+  """
+  If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds
+  """
+  editingLockedBy: ContentNodeToEditLockConnectionEdge
+
+  """The RSS enclosure for the object"""
+  enclosure: String
+
+  """Connection between the ContentNode type and the EnqueuedScript type"""
+  enqueuedScripts(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): ContentNodeToEnqueuedScriptConnection
+
+  """
+  Connection between the ContentNode type and the EnqueuedStylesheet type
+  """
+  enqueuedStylesheets(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+  ): ContentNodeToEnqueuedStylesheetConnection
+
+  """
+  Connection between the NodeWithFeaturedImage type and the MediaItem type
+  """
+  featuredImage: NodeWithFeaturedImageToMediaItemConnectionEdge
+
+  """
+  The database identifier for the featured image node assigned to the content node
+  """
+  featuredImageDatabaseId: Int
+
+  """Globally unique ID of the featured image assigned to the node"""
+  featuredImageId: ID
+
+  """
+  The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table.
+  """
+  guid: String
+
+  """Whether the projects object is password protected."""
+  hasPassword: Boolean
+
+  """The globally unique identifier of the projects object."""
+  id: ID!
+
+  """Whether the node is a Comment"""
+  isComment: Boolean!
+
+  """Whether the node is a Content Node"""
+  isContentNode: Boolean!
+
+  """Whether the node represents the front page."""
+  isFrontPage: Boolean!
+
+  """Whether  the node represents the blog page."""
+  isPostsPage: Boolean!
+
+  """Whether the object is a node in the preview state"""
+  isPreview: Boolean
+
+  """Whether the object is restricted from the current viewer"""
+  isRestricted: Boolean
+
+  """Whether the node is a Term"""
+  isTermNode: Boolean!
+
+  """The user that most recently edited the node"""
+  lastEditedBy: ContentNodeToEditLastConnectionEdge
+
+  """The permalink of the post"""
+  link: String
+
+  """
+  The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time.
+  """
+  modified: String
+
+  """
+  The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT.
+  """
+  modifiedGmt: String
+
+  """The parent of the content node."""
+  parent: ProjectToParentConnectionEdge @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+
+  """The password for the projects object."""
+  password: String
+
+  """Connection between the Project type and the Project type"""
+  preview: ProjectToPreviewConnectionEdge
+
+  """The database id of the preview node"""
+  previewRevisionDatabaseId: Int
+
+  """Whether the object is a node in the preview state"""
+  previewRevisionId: ID
+
+  """The id field matches the WP_Post-&gt;ID field."""
+  projectId: Int! @deprecated(reason: "Deprecated in favor of the databaseId field")
+
+  """
+  Added to the GraphQL Schema because the ACF Field Group &quot;projects&quot; was set to Show in GraphQL.
+  """
+  projects: Project_Projects
+
+  """
+  The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table.
+  """
+  slug: String
+
+  """The current status of the object"""
+  status: String
+
+  """The template assigned to the node"""
+  template: ContentTemplate
+
+  """
+  The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made.
+  """
+  title(
+    """Format of the field output"""
+    format: PostObjectFieldFormatEnum
+  ): String
+
+  """The unique resource identifier path"""
+  uri: String
+}
+
+"""Connection to Project Nodes"""
+interface ProjectConnection implements Connection {
+  """
+  A list of edges (relational context) between RootQuery and connected Project Nodes
+  """
+  edges: [ProjectConnectionEdge!]!
+
+  """A list of connected Project Nodes"""
+  nodes: [Project!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: ProjectConnectionPageInfo!
+}
+
+"""Edge between a Node and a connected Project"""
+interface ProjectConnectionEdge implements Edge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The connected Project Node"""
+  node: Project!
+}
+
+"""Page Info on the connected ProjectConnectionEdge"""
+interface ProjectConnectionPageInfo implements PageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""The Type of Identifier used to fetch a single resource. Default is ID."""
+enum ProjectIdType {
+  """Identify a resource by the Database ID."""
+  DATABASE_ID
+
+  """Identify a resource by the (hashed) Global ID."""
+  ID
+
+  """
+  Identify a resource by the slug. Available to non-hierarchcial Types where the slug is a unique identifier.
+  """
+  SLUG
+
+  """Identify a resource by the URI."""
+  URI
+}
+
+"""Connection between the Project type and the Project type"""
+type ProjectToParentConnectionEdge implements Edge & OneToOneConnection & ProjectConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Project! @deprecated(reason: "This content type is not hierarchical and typically will not have a parent")
+}
+
+"""Connection between the Project type and the Project type"""
+type ProjectToPreviewConnectionEdge implements Edge & OneToOneConnection & ProjectConnectionEdge {
+  """
+  Opaque reference to the nodes position in the connection. Value can be used with pagination args.
+  """
+  cursor: String
+
+  """The node of the connection, without the edges"""
+  node: Project!
+}
+
+"""Connection between the Project type and the Project type"""
+type ProjectToProjectConnection implements Connection & ProjectConnection {
+  """Edges for the ProjectToProjectConnection connection"""
+  edges: [ProjectToProjectConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Project!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: ProjectToProjectConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type ProjectToProjectConnectionEdge implements Edge & ProjectConnectionEdge {
+  """A cursor for use in pagination"""
+  cursor: String @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+
+  """The item at the end of the edge"""
+  node: Project! @deprecated(reason: "This content type is not hierarchical and typically will not have ancestors")
+}
+
+"""Page Info on the &quot;ProjectToProjectConnection&quot;"""
+type ProjectToProjectConnectionPageInfo implements PageInfo & ProjectConnectionPageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Field Group"""
+type Project_Projects implements AcfFieldGroup {
+  """"""
+  color: String
+
+  """"""
+  description: String
+
+  """The name of the ACF Field Group"""
+  fieldGroupName: String
+
+  """"""
+  image: MediaItem
+
+  """"""
+  title: String
 }
 
 """The reading setting type"""
@@ -9647,6 +10096,12 @@ type RootMutation {
     input: CreatePostFormatInput!
   ): CreatePostFormatPayload
 
+  """The createProject mutation"""
+  createProject(
+    """Input for the createProject mutation"""
+    input: CreateProjectInput!
+  ): CreateProjectPayload
+
   """The createTag mutation"""
   createTag(
     """Input for the createTag mutation"""
@@ -9712,6 +10167,12 @@ type RootMutation {
     """Input for the deletePostFormat mutation"""
     input: DeletePostFormatInput!
   ): DeletePostFormatPayload
+
+  """The deleteProject mutation"""
+  deleteProject(
+    """Input for the deleteProject mutation"""
+    input: DeleteProjectInput!
+  ): DeleteProjectPayload
 
   """The deleteTag mutation"""
   deleteTag(
@@ -9814,6 +10275,12 @@ type RootMutation {
     """Input for the updatePostFormat mutation"""
     input: UpdatePostFormatInput!
   ): UpdatePostFormatPayload
+
+  """The updateProject mutation"""
+  updateProject(
+    """Input for the updateProject mutation"""
+    input: UpdateProjectInput!
+  ): UpdateProjectPayload
 
   """The updateSettings mutation"""
   updateSettings(
@@ -10377,6 +10844,59 @@ type RootQuery {
     where: RootQueryToPostConnectionWhereArgs
   ): RootQueryToPostConnection
 
+  """An object of the Project Type. """
+  project(
+    """
+    Whether to return the Preview Node instead of the Published Node. When the ID of a Node is provided along with asPreview being set to true, the preview node with un-published changes will be returned instead of the published node. If no preview node exists or the requester doesn't have proper capabilities to preview, no node will be returned. If the ID provided is a URI and has a preview query arg, it will be used as a fallback if the "asPreview" argument is not explicitly provided as an argument.
+    """
+    asPreview: Boolean
+
+    """The globally unique identifier of the object."""
+    id: ID!
+
+    """Type of unique identifier to fetch by. Default is Global ID"""
+    idType: ProjectIdType
+  ): Project
+
+  """A Project object"""
+  projectBy(
+    """Get the Project object by its global ID"""
+    id: ID
+
+    """Get the Project by its database ID"""
+    projectId: Int
+
+    """
+    Get the Project by its slug (only available for non-hierarchical types)
+    """
+    slug: String
+
+    """Get the Project by its uri"""
+    uri: String
+  ): Project @deprecated(reason: "Deprecated in favor of using the single entry point for this type with ID and IDType fields. For example, instead of postBy( id: &quot;&quot; ), use post(id: &quot;&quot; idType: &quot;&quot;)")
+
+  """Connection between the RootQuery type and the Project type"""
+  projects(
+    """
+    Cursor used along with the "first" argument to reference where in the dataset to get data
+    """
+    after: String
+
+    """
+    Cursor used along with the "last" argument to reference where in the dataset to get data
+    """
+    before: String
+
+    """The number of items to return after the referenced "after" cursor"""
+    first: Int
+
+    """The number of items to return before the referenced "before" cursor"""
+    last: Int
+
+    """Arguments for filtering the connection"""
+    where: RootQueryToProjectConnectionWhereArgs
+  ): RootQueryToProjectConnection
+
   """Fields of the &#039;ReadingSettings&#039; settings group"""
   readingSettings: ReadingSettings
 
@@ -10781,7 +11301,6 @@ input RootQueryToAbcConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToAbcConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToAbcConnectionWhereArgsMetaCompareEnum
@@ -10813,7 +11332,6 @@ enum RootQueryToAbcConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToAbcConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToAbcConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -10949,9 +11467,6 @@ input RootQueryToCategoryConnectionWhereArgs {
 
   """Array of slugs to return term(s) for. Default empty."""
   slug: [String]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -11092,8 +11607,8 @@ input RootQueryToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -11207,7 +11722,6 @@ input RootQueryToContentNodeConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToContentNodeConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToContentNodeConnectionWhereArgsMetaCompareEnum
@@ -11239,7 +11753,6 @@ enum RootQueryToContentNodeConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToContentNodeConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToContentNodeConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -11499,7 +12012,6 @@ input RootQueryToMediaItemConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToMediaItemConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToMediaItemConnectionWhereArgsMetaCompareEnum
@@ -11531,7 +12043,6 @@ enum RootQueryToMediaItemConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToMediaItemConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToMediaItemConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -11761,7 +12272,6 @@ input RootQueryToNewConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToNewConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToNewConnectionWhereArgsMetaCompareEnum
@@ -11793,7 +12303,6 @@ enum RootQueryToNewConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToNewConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToNewConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -11930,7 +12439,6 @@ input RootQueryToPageConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToPageConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToPageConnectionWhereArgsMetaCompareEnum
@@ -11962,7 +12470,6 @@ enum RootQueryToPageConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToPageConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToPageConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -12186,7 +12693,6 @@ input RootQueryToPostConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToPostConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToPostConnectionWhereArgsMetaCompareEnum
@@ -12218,7 +12724,6 @@ enum RootQueryToPostConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToPostConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToPostConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -12356,13 +12861,161 @@ input RootQueryToPostFormatConnectionWhereArgs {
   slug: [String]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
   updateTermMetaCache: Boolean
+}
+
+"""Connection between the RootQuery type and the Project type"""
+type RootQueryToProjectConnection implements Connection & ProjectConnection {
+  """Edges for the RootQueryToProjectConnection connection"""
+  edges: [RootQueryToProjectConnectionEdge!]!
+
+  """The nodes of the connection, without the edges"""
+  nodes: [Project!]!
+
+  """Information about pagination in a connection."""
+  pageInfo: RootQueryToProjectConnectionPageInfo!
+}
+
+"""An edge in a connection"""
+type RootQueryToProjectConnectionEdge implements Edge & ProjectConnectionEdge {
+  """A cursor for use in pagination"""
+  cursor: String
+
+  """The item at the end of the edge"""
+  node: Project!
+}
+
+"""Page Info on the &quot;RootQueryToProjectConnection&quot;"""
+type RootQueryToProjectConnectionPageInfo implements PageInfo & ProjectConnectionPageInfo & WPPageInfo {
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """
+  Get information about the offset pagination state in the current connection
+  """
+  offsetPagination: OffsetPaginationPageInfo
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+}
+
+"""Arguments for filtering the RootQueryToProjectConnection connection"""
+input RootQueryToProjectConnectionWhereArgs {
+  """Filter the connection based on dates"""
+  dateQuery: DateQueryInput
+
+  """
+  True for objects with passwords; False for objects without passwords; null for all objects with or without passwords
+  """
+  hasPassword: Boolean
+
+  """Specific database ID of the object"""
+  id: Int
+
+  """Array of IDs for the objects to retrieve"""
+  in: [ID]
+  metaQuery: RootQueryToProjectConnectionWhereArgsMetaQuery
+
+  """Get objects with a specific mimeType property"""
+  mimeType: MimeTypeEnum
+
+  """Slug / post_name of the object"""
+  name: String
+
+  """Specify objects to retrieve. Use slugs"""
+  nameIn: [String]
+
+  """
+  Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored
+  """
+  notIn: [ID]
+
+  """Paginate Projects with offsets"""
+  offsetPagination: OffsetPagination
+
+  """What parameter to use to order the objects by."""
+  orderby: [PostObjectsConnectionOrderbyInput]
+
+  """Use ID to return only children. Use 0 to return only top-level items"""
+  parent: ID
+
+  """Specify objects whose parent is in an array"""
+  parentIn: [ID]
+
+  """Specify posts whose parent is not in an array"""
+  parentNotIn: [ID]
+
+  """Show posts with a specific password."""
+  password: String
+
+  """Show Posts based on a keyword search"""
+  search: String
+
+  """Retrieve posts where post status is in an array."""
+  stati: [PostStatusEnum]
+
+  """Show posts with a specific status."""
+  status: PostStatusEnum
+
+  """Title of the object"""
+  title: String
+}
+
+input RootQueryToProjectConnectionWhereArgsMetaArray {
+  """Custom field value"""
+  compare: RootQueryToProjectConnectionWhereArgsMetaCompareEnum
+
+  """Custom field key"""
+  key: String
+
+  """Custom field value"""
+  type: RootQueryToProjectConnectionWhereArgsMetaTypeEnum
+
+  """Custom field value"""
+  value: String
+}
+
+enum RootQueryToProjectConnectionWhereArgsMetaCompareEnum {
+  BETWEEN
+  EQUAL_TO
+  EXISTS
+  GREATER_THAN
+  GREATER_THAN_OR_EQUAL_TO
+  IN
+  LESS_THAN
+  LESS_THAN_OR_EQUAL_TO
+  LIKE
+  NOT_BETWEEN
+  NOT_EQUAL_TO
+  NOT_EXISTS
+  NOT_IN
+  NOT_LIKE
+}
+
+input RootQueryToProjectConnectionWhereArgsMetaQuery {
+  metaArray: [RootQueryToProjectConnectionWhereArgsMetaArray]
+  relation: RelationEnum
+}
+
+enum RootQueryToProjectConnectionWhereArgsMetaTypeEnum {
+  BINARY
+  CHAR
+  DATE
+  DATETIME
+  DECIMAL
+  NUMERIC
+  SIGNED
+  TIME
+  UNSIGNED
 }
 
 """Connection between the RootQuery type and the ContentNode type"""
@@ -12468,7 +13121,6 @@ input RootQueryToRevisionsConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToRevisionsConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToRevisionsConnectionWhereArgsMetaCompareEnum
@@ -12500,7 +13152,6 @@ enum RootQueryToRevisionsConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToRevisionsConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToRevisionsConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -12636,9 +13287,6 @@ input RootQueryToTagConnectionWhereArgs {
 
   """Array of slugs to return term(s) for. Default empty."""
   slug: [String]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
 
   """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
@@ -12811,9 +13459,6 @@ input RootQueryToTermNodeConnectionWhereArgs {
   taxonomies: [TaxonomyEnum]
 
   """Array of term taxonomy IDs, to match when querying terms."""
-  termTaxonomId: [ID]
-
-  """Array of term taxonomy IDs, to match when querying terms."""
   termTaxonomyId: [ID]
 
   """Whether to prime meta caches for matched terms. Default true."""
@@ -12925,7 +13570,6 @@ input RootQueryToTestimonialConnectionWhereArgs {
   title: String
 }
 
-""""""
 input RootQueryToTestimonialConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: RootQueryToTestimonialConnectionWhereArgsMetaCompareEnum
@@ -12957,7 +13601,6 @@ enum RootQueryToTestimonialConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input RootQueryToTestimonialConnectionWhereArgsMetaQuery {
   metaArray: [RootQueryToTestimonialConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -13167,6 +13810,17 @@ type RootQueryToUserRoleConnectionPageInfo implements PageInfo & UserRoleConnect
 
   """When paginating backwards, the cursor to continue."""
   startCursor: String
+}
+
+"""Location in the document where the script to be loaded"""
+enum ScriptLoadingGroupLocationEnum {
+  """
+  A script to be loaded in document at right before the closing `<body>` tag
+  """
+  FOOTER
+
+  """A script to be loaded in document `<head>` tag"""
+  HEADER
 }
 
 """The strategy to use when loading the script"""
@@ -13601,7 +14255,6 @@ input TagToContentNodeConnectionWhereArgs {
   title: String
 }
 
-""""""
 input TagToContentNodeConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: TagToContentNodeConnectionWhereArgsMetaCompareEnum
@@ -13633,7 +14286,6 @@ enum TagToContentNodeConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input TagToContentNodeConnectionWhereArgsMetaQuery {
   metaArray: [TagToContentNodeConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -13801,7 +14453,6 @@ input TagToPostConnectionWhereArgs {
   title: String
 }
 
-""""""
 input TagToPostConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: TagToPostConnectionWhereArgsMetaCompareEnum
@@ -13833,7 +14484,6 @@ enum TagToPostConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input TagToPostConnectionWhereArgsMetaQuery {
   metaArray: [TagToPostConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -14930,7 +15580,14 @@ input UpdateCategoryInput {
   """The name of the category object to mutate"""
   name: String
 
-  """The ID of the category that should be set as the parent"""
+  """
+  The database ID of the category that should be set as the parent. This field cannot be used in conjunction with parentId
+  """
+  parentDatabaseId: Int
+
+  """
+  The ID of the category that should be set as the parent. This field cannot be used in conjunction with parentDatabaseId
+  """
   parentId: ID
 
   """
@@ -14952,9 +15609,6 @@ type UpdateCategoryPayload {
 
 """Input for the updateComment mutation."""
 input UpdateCommentInput {
-  """The approval status of the comment."""
-  approved: String
-
   """The name of the comment's author."""
   author: String
 
@@ -15293,6 +15947,56 @@ type UpdatePostPayload {
 
   """The Post object mutation type."""
   post: Post
+}
+
+"""Input for the updateProject mutation."""
+input UpdateProjectInput {
+  """
+  This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """The content of the object"""
+  content: String
+
+  """
+  The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17 
+  """
+  date: String
+
+  """The ID of the Project object"""
+  id: ID!
+
+  """Override the edit lock when another user is editing the post"""
+  ignoreEditLock: Boolean
+
+  """
+  A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types.
+  """
+  menuOrder: Int
+
+  """The password used to protect the content of the object"""
+  password: String
+
+  """The slug of the object"""
+  slug: String
+
+  """The status of the object"""
+  status: PostStatusEnum
+
+  """The title of the object"""
+  title: String
+}
+
+"""The payload for the updateProject mutation."""
+type UpdateProjectPayload {
+  """
+  If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions.
+  """
+  clientMutationId: String
+
+  """The Post object mutation type."""
+  project: Project
 }
 
 """Input for the updateSettings mutation."""
@@ -16115,8 +16819,8 @@ input UserToCommentConnectionWhereArgs {
   """Search term(s) to retrieve matching comments for."""
   search: String
 
-  """Comment status to limit results by."""
-  status: String
+  """One or more Comment Statuses to limit results by"""
+  statusIn: [CommentStatusEnum]
 
   """Include comments for a specific user ID."""
   userId: ID
@@ -16320,7 +17024,6 @@ input UserToMediaItemConnectionWhereArgs {
   title: String
 }
 
-""""""
 input UserToMediaItemConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: UserToMediaItemConnectionWhereArgsMetaCompareEnum
@@ -16352,7 +17055,6 @@ enum UserToMediaItemConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input UserToMediaItemConnectionWhereArgsMetaQuery {
   metaArray: [UserToMediaItemConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -16486,7 +17188,6 @@ input UserToPageConnectionWhereArgs {
   title: String
 }
 
-""""""
 input UserToPageConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: UserToPageConnectionWhereArgsMetaCompareEnum
@@ -16518,7 +17219,6 @@ enum UserToPageConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input UserToPageConnectionWhereArgsMetaQuery {
   metaArray: [UserToPageConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -16686,7 +17386,6 @@ input UserToPostConnectionWhereArgs {
   title: String
 }
 
-""""""
 input UserToPostConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: UserToPostConnectionWhereArgsMetaCompareEnum
@@ -16718,7 +17417,6 @@ enum UserToPostConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input UserToPostConnectionWhereArgsMetaQuery {
   metaArray: [UserToPostConnectionWhereArgsMetaArray]
   relation: RelationEnum
@@ -16839,7 +17537,6 @@ input UserToRevisionsConnectionWhereArgs {
   title: String
 }
 
-""""""
 input UserToRevisionsConnectionWhereArgsMetaArray {
   """Custom field value"""
   compare: UserToRevisionsConnectionWhereArgsMetaCompareEnum
@@ -16871,7 +17568,6 @@ enum UserToRevisionsConnectionWhereArgsMetaCompareEnum {
   NOT_LIKE
 }
 
-""""""
 input UserToRevisionsConnectionWhereArgsMetaQuery {
   metaArray: [UserToRevisionsConnectionWhereArgsMetaArray]
   relation: RelationEnum
