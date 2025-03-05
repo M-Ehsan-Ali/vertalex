@@ -44,19 +44,19 @@ export default async function Testimonials() {
 
   if (testimonials.length === 0) {
     return (
-      <div className="text-center py-16 text-xl font-semibold mt-[56px] sm:mt-[0px]">
+      <div className="text-center py-16 text-xl font-semibold mt-[56px] xl:mt-[0px]">
         No testimonials available at the moment.
       </div>
     );
   }
 
   return (
-    <div id="testimonials" className="mt-[56px] sm:mt-[0px]">
+    <div id="testimonials" className="mt-[56px] xl:mt-[0px]">
       <div className="py-6 md:py-12">
-        <div className="font-figtree text-[28px] sm:text-[62px] font-normal leading-[68px] tracking-[-0.03em] text-center no-underline text-[#445ae0]">
+        <div className="font-figtree text-[28px] xl:text-[62px] font-normal leading-[68px] tracking-[-0.03em] text-center no-underline text-[#445ae0]">
           What our customers say
         </div>
-        <div className="sm:mt-[24px] font-figtree text-[12px] sm:text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center no-underline text-[#646a69]">
+        <div className="xl:mt-[24px] font-figtree text-[12px] xl:text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center no-underline text-[#646a69]">
           Thousands of satisfied customers have transformed their aluminum
           usage.
         </div>

@@ -45,9 +45,9 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
   const currentProject = projectData[currentIndex];
 
   return (
-    <div className="mt-[42px] sm:mt-[165px]">
+    <div className="mt-[42px] xl:mt-[165px]">
       {/* Desktop Layout */}
-      <div className="hidden sm:flex gap-[56px]">
+      <div className="hidden xl:flex gap-[56px]">
         {projectData.map((item, index) => (
           <div key={index} className="bg-[#d6f1cf] w-[380px] rounded-[20px]">
             <div className="relative">
@@ -78,7 +78,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
 
       {/* Mobile Slider */}
       {/* Left Arrow */}
-      <div className="flex sm:hidden overflow-hidden items-center gap-[16px]">
+      <div className="flex xl:hidden overflow-hidden items-center gap-[16px]">
         <img
           onClick={handlePrevious}
           src="/ourProjects/backward.svg"
