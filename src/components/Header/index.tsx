@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/legacy/image";
 import Link from "next/link";
 
 export default function Header() {
@@ -11,21 +10,19 @@ export default function Header() {
           {/* Logo Section */}
           <Link href={"/"}>
             <div className="hidden xl:flex flex-col justify-center items-center">
-              <Image
+              <img
                 src="/logo-light.svg"
-                width={270}
-                height={50}
                 alt="vertalex"
-                className="mt-[8px]"
+                loading="lazy"
+                className="mt-[8px] w-[270px] h-[50px]"
               />
             </div>
             <div className="flex flex-col justify-center items-center xl:hidden">
-              <Image
+              <img
                 src="/logo-light.svg"
-                width={120}
-                height={20}
+                loading="lazy"
                 alt="vertalex"
-                className=" mt-[8px]"
+                className=" mt-[8px] w-[120px] h-[20px]"
               />
             </div>
           </Link>

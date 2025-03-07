@@ -32,6 +32,7 @@ export default function Services() {
         <img
           src="/services/services.png"
           alt="Services"
+          loading="lazy"
           style={{ width: "100vw" }}
         />
       </div>
@@ -51,7 +52,11 @@ export default function Services() {
             <div className="mt-20 relative px-8">
               <div className="border-l-2 border-dashed border-color_0166C8">
                 <div className="absolute top-[-50px] right-2">
-                  <img src="/services/small_linkedin.svg" width={130} />
+                  <img
+                    src="/services/small_linkedin.svg"
+                    loading="lazy"
+                    width={130}
+                  />
                 </div>
 
                 {cardsArray?.map((item) => {
@@ -59,10 +64,14 @@ export default function Services() {
                     <div className="mt-6">
                       <div className="flex flex-col gap-3 px-6 relative">
                         <div className="absolute top-2 left-[-13px]">
-                          <img src="/services/ellipse.svg" width={25} />
+                          <img
+                            src="/services/ellipse.svg"
+                            loading="lazy"
+                            width={25}
+                          />
                         </div>
                         <div className="flex justify-center">
-                          <img src={item.imageSrc} width={55} />
+                          <img src={item.imageSrc} loading="lazy" width={55} />
                         </div>
                         <div className="text-[17px] font-semibold text-center">
                           {item.title}

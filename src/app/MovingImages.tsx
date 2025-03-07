@@ -39,6 +39,7 @@ const MovingImages: React.FC<MovingImagesProps> = ({
       <img
         onClick={goToPreviousImage}
         src="/left_arrow.svg"
+        loading="lazy"
         className="w-[24px] md:w-[32px] absolute right-[40px] bottom-[0px] z-10 text-white bg-black/60 cursor-pointer hover:bg-black/100 transition rounded-full"
         alt="Previous"
       />
@@ -49,6 +50,7 @@ const MovingImages: React.FC<MovingImagesProps> = ({
           <img
             key={index}
             src={src}
+            loading="lazy"
             alt={`Image ${index}`}
             className={`absolute top-0 left-0 w-[100%] h-[100%] rounded-[50%] transition-opacity duration-1000 ${
               index === currentIndex ? "opacity-100" : "opacity-0"
@@ -61,6 +63,7 @@ const MovingImages: React.FC<MovingImagesProps> = ({
       <img
         onClick={goToNextImage}
         src="/right_arrow.svg"
+        loading="lazy"
         className="w-[24px] md:w-[32px] absolute right-[0px] bottom-[0px] z-10 text-white bg-black/60 hover:bg-black/100 cursor-pointer transition rounded-full"
         alt="Next"
       />

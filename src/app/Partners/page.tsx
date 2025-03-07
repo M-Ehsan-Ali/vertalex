@@ -8,16 +8,19 @@ const Partner = () => {
         <img
           src="/paradise.png"
           alt="paradise"
+          loading="lazy"
           className="w-[90px] h-[30px] xl:w-[120px] sm-h-[50px]"
         />
         <img
           src="/aspen.png"
           alt="aspen"
+          loading="lazy"
           className="w-[90px] h-[30px] xl:w-[120px] sm-h-[50px]"
         />
         <img
           src="/octagon.png"
           alt="octagon"
+          loading="lazy"
           className="w-[90px] h-[30px] xl:w-[120px] sm-h-[50px]"
         />
       </div>

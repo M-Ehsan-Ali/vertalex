@@ -19,6 +19,7 @@ export default function Content() {
             <img
               src={"/bookMeeting/small_book_meeting.png"}
               alt="Book a Meeting"
+              loading="lazy"
               className="w-[600px]"
             />
           </div>
@@ -34,6 +35,7 @@ export default function Content() {
           <img
             src={"/bookMeeting/book_meeting.png"}
             alt="Book a Meeting"
+            loading="lazy"
             className="w-full"
           />
         </div>

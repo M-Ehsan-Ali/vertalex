@@ -23,7 +23,7 @@ export default function Home() {
       <div className="flex flex-col-reverse xl:flex-row w-full p-[0px_18px_0px_18px] xl:p-[0px] gap-[14px] xl:gap-[0px]">
         <div className="w-full xl:w-[60%] pt-[0px] pl-[0px] pb-[32px] xl:pt-[86px] xl:pl-[112px] xl:pb-[120px]">
           <div className="flex gap-[8px]">
-            <img src="/powerIcon.svg" alt="icon" />
+            <img src="/powerIcon.svg" loading="lazy" alt="icon" />
             <p className="font-rubik text-[14px] font-medium leading-5 tracking-tight text-left decoration-skip-ink">
               Powering Tomorrow
             </p>
@@ -88,6 +88,7 @@ export default function Home() {
         <img
           src="/JoinGreen.png"
           alt="green"
+          loading="lazy"
           className="w-[45%] xl:h-[452px]"
         />
       </div>
@@ -99,6 +100,7 @@ export default function Home() {
       <img
         src="/aboveNews.png"
         alt="png"
+        loading="lazy"
         className="w-[50%] xl:w-auto mt-[76px] mb-[54px] xl:mt-[121px] xl:mb-[100px]"
       />
 

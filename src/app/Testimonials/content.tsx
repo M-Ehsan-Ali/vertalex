@@ -54,16 +54,17 @@ export default function Content({ testimonials }: ContentProps) {
             src="/testimonials/left_arrow.svg"
             className="w-[12px] md:w-[60px]"
             alt="Previous"
+            loading="lazy"
           />
         </div>
         {/* Dynamic Review */}
         <div className="bg-[#d6f1cf] w-[80%] rounded-[16px] p-[6px_64px] xl:p-[48px_64px]">
           <div className="flex justify-center">
-            <img src="/testimonials/star.svg" alt="rating" />
-            <img src="/testimonials/star.svg" alt="rating" />
-            <img src="/testimonials/star.svg" alt="rating" />
-            <img src="/testimonials/star.svg" alt="rating" />
-            <img src="/testimonials/star.svg" alt="rating" />
+            <img src="/testimonials/star.svg" alt="rating" loading="lazy" />
+            <img src="/testimonials/star.svg" alt="rating" loading="lazy" />
+            <img src="/testimonials/star.svg" alt="rating" loading="lazy" />
+            <img src="/testimonials/star.svg" alt="rating" loading="lazy" />
+            <img src="/testimonials/star.svg" alt="rating" loading="lazy" />
           </div>
           <div
             className={clsx(
@@ -89,6 +90,7 @@ export default function Content({ testimonials }: ContentProps) {
             src="/testimonials/right_arrow.svg"
             className="w-[12px] md:w-[60px]"
             alt="Next"
+            loading="lazy"
           />
         </div>
       </div>

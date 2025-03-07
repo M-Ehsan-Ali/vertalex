@@ -53,7 +53,11 @@ export default function ScheduleCallback() {
           </form>
         </div>
         <div className="hidden md:block absolute right-1 bottom-0">
-          <img src="/Footer/linkedin.png" className="w-[220px] h-[220px]" />
+          <img
+            src="/Footer/linkedin.png"
+            className="w-[220px] h-[220px]"
+            loading="lazy"
+          />
         </div>
       </div>
       <div className="pb-12"></div>

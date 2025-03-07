@@ -40,6 +40,7 @@ export default function FooterNav() {
               <img
                 src="/fbIcon.svg"
                 alt="fb"
+                loading="lazy"
                 className="xl:w-[48px] xl:h-[48px] w-[35px] h-[35px]"
               />
               <p className="font-figtree text-[12px] xl:text-base font-medium leading-6 tracking-tight text-left decoration-from-font text-[#1d1f1e]">
@@ -50,6 +51,7 @@ export default function FooterNav() {
               <img
                 src="/instaIcon.svg"
                 alt="insta"
+                loading="lazy"
                 className="xl:w-[48px] xl:h-[48px] w-[35px] h-[35px]"
               />
               <p className="font-figtree text-[12px] xl:text-base font-medium leading-6 tracking-tight text-left decoration-from-font text-[#1d1f1e]">
@@ -65,6 +67,7 @@ export default function FooterNav() {
               <img
                 src="/linkedInIcon.svg"
                 alt="linkedIn"
+                loading="lazy"
                 className="xl:w-[48px] xl:h-[48px] w-[35px] h-[35px]"
               />
               <p className="font-figtree text-[12px] xl:text-base font-medium leading-6 tracking-tight text-left decoration-from-font text-[#1d1f1e]">
@@ -74,14 +77,19 @@ export default function FooterNav() {
           </div>
         </div>
         <div className="hidden xl:flex flex-col justify-end">
-          <img src="/footerLogo.svg" alt="footerlogo" />
+          <img src="/footerLogo.svg" alt="footerlogo" loading="lazy" />
           <p className="font-figtree text-sm font-normal leading-5 tracking-tight text-left decoration-from-font text-[#646A69]">
             © {currentYear} Vertalex All rights reserved.
           </p>
         </div>
       </div>
       <div className="flex xl:hidden flex-col justify-center items-center mb-[24px]">
-        <img src="/footerLogo.svg" alt="footerlogo" className="w-[90px]" />
+        <img
+          src="/footerLogo.svg"
+          alt="footerlogo"
+          className="w-[90px]"
+          loading="lazy"
+        />
         <p className="font-figtree text-sm font-normal leading-5 tracking-tight text-left decoration-from-font text-[#646A69]">
           © {currentYear} Vertalex All rights reserved.
         </p>

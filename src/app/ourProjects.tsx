@@ -54,6 +54,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
               <img
                 src={item.image.sourceUrl}
                 alt={item.image.id}
+                loading="lazy"
                 className="w-[380px] h-[375px]"
               />
               <div
@@ -82,6 +83,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
         <img
           onClick={handlePrevious}
           src="/ourProjects/backward.svg"
+          loading="lazy"
           className="transform -translate-y-1/2"
         />
         <div className="bg-[#d6f1cf] w-[288px] rounded-[20px]">
@@ -89,6 +91,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
             <img
               src={currentProject.image.sourceUrl}
               alt={currentProject.image.id}
+              loading="lazy"
               className="w-[288px] h-[288px]"
             />
             <div
@@ -114,6 +117,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
         <img
           onClick={handleNext}
           src="/ourProjects/forward.svg"
+          loading="lazy"
           className="transform -translate-y-1/2"
         />
       </div>

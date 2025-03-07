@@ -10,7 +10,12 @@ const KeyElement = () => {
         <div>
           <div className="flex gap-[38px] xl:gap-[360px] mt-[36px] xl:mt-[90px] justify-between xl:justify-unset">
             <div className="flex flex-col items-center xl:w-[383px]">
-              <img src="/TUV.svg" alt="TUV" className="w-[46px] xl:w-auto" />
+              <img
+                src="/TUV.svg"
+                alt="TUV"
+                loading="lazy"
+                className="w-[46px] xl:w-auto"
+              />
               <p className="font-rubik text-[12px] xl:text-[24px] font-normal xl:leading-[90px] tracking-[-0.05em] no-underline">
                 TUV Verified Carbon Footprint
               </p>
@@ -19,6 +24,7 @@ const KeyElement = () => {
               <img
                 src="/qualanod.svg"
                 alt="qualanod"
+                loading="lazy"
                 className="w-[46px] xl:w-auto"
               />
               <p className="font-rubik text-[12px] xl:text-[24px] font-normal xl:leading-[90px] tracking-[-0.05em] no-underline">
@@ -31,6 +37,7 @@ const KeyElement = () => {
               <img
                 src="/billets.svg"
                 alt="billets"
+                loading="lazy"
                 className="w-[46px] xl:w-auto"
               />
               <p className="font-rubik text-[12px] xl:text-[24px] font-normal xl:leading-[90px] tracking-[-0.05em] no-underline">
@@ -38,7 +45,12 @@ const KeyElement = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <img src="/FPC.svg" alt="FPC" className="w-[46px] xl:w-auto" />
+              <img
+                src="/FPC.svg"
+                alt="FPC"
+                loading="lazy"
+                className="w-[46px] xl:w-auto"
+              />
               <p className="font-rubik text-[12px] xl:text-[24px] font-normal tracking-[-0.05em] no-underline text-center">
                 FPC Certified Technoform Thermal
                 <br /> Break Assembly Quality Certified
@@ -47,7 +59,12 @@ const KeyElement = () => {
           </div>
           <div className="flex gap-[38px] xl:gap-[360px] justify-between xl:justify-unset">
             <div className="flex flex-col items-center xl:w-[383px]">
-              <img src="/ISO.svg" alt="ISO" className="w-[46px] xl:w-auto" />
+              <img
+                src="/ISO.svg"
+                alt="ISO"
+                loading="lazy"
+                className="w-[46px] xl:w-auto"
+              />
               <p className="font-rubik text-[12px] xl:text-[24px] font-normal xl:leading-[90px] tracking-[-0.05em] no-underline">
                 ISO 9001/14001/45001 Certified
               </p>
@@ -56,6 +73,7 @@ const KeyElement = () => {
               <img
                 src="/qualicoat.svg"
                 alt="qualicoat"
+                loading="lazy"
                 className="w-[46px] xl:w-auto"
               />
               <p className="font-rubik text-[12px] xl:text-[24px] font-normal xl:leading-[90px] tracking-[-0.05em] no-underline text-center">
@@ -67,6 +85,7 @@ const KeyElement = () => {
             <img
               src="/lowPrice.svg"
               alt="lowPrice"
+              loading="lazy"
               className="w-[46px] xl:w-auto"
             />
             <p className="font-rubik text-[12px] xl:text-[24px] font-normal xl:leading-[90px] tracking-[-0.05em] no-underline text-center">

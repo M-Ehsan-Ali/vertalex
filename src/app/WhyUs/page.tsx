@@ -10,6 +10,7 @@ const WhyUs = () => {
       <img
         src="/whyUsTop.png"
         alt="Top left"
+        loading="lazy"
         className="w-[170px] xl:h-auto xl:w-auto"
       />
       <p className="text-white font-raleway text-[24px] xl:text-[119px] font-bold leading-[90px] tracking-[-0.05em] text-left no-underline mt-[92px] ml-[30px]">
@@ -27,6 +28,7 @@ const WhyUs = () => {
       <img
         src="/whyUsBottom.png"
         alt="Top left"
+        loading="lazy"
         className="absolute right-[0px] w-[170px] xl:w-auto bottom-[-25px] xl:bottom-[-50px]"
       />
     </div>
