@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 
+/** Contact form – dummy submit only. No backend; data is not sent anywhere. */
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     "your-name": "",
@@ -20,40 +21,11 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setStatus("Sending...");
 
-    // Creating FormData to send to the Contact Form 7 API
-    const formDataToSend = new FormData();
-    formDataToSend.append("your-name", formData["your-name"]);
-    formDataToSend.append("your-email", formData["your-email"]);
-    formDataToSend.append("your-subject", formData["your-subject"]);
-    formDataToSend.append("your-message", formData["your-message"]);
-    formDataToSend.append("_wpcf7", "1cf6c64"); // Your form ID from Contact Form 7
-    formDataToSend.append("_wpcf7_version", "5.6.0"); // CF7 version (optional)
-    formDataToSend.append("_wpcf7_locale", "en"); // Locale (optional)
-    formDataToSend.append("_wpcf7_unit_tag", "wpcf7-f80ce0e9-p29-o1"); // Unit Tag (replace with actual tag)
-
-    try {
-      const response = await fetch(
-        "http://staging.octalcode.com/wp-json/contact-form-7/v1/contact-forms/29/feedback", // Replace with your form ID
-        {
-          method: "POST",
-          body: formDataToSend,
-        }
-      );
-
-      const data = await response.json();
-
-      if (data.status === "mail_sent") {
-        setStatus("Your message has been sent successfully!");
-      } else {
-        setStatus("Failed to send your message.");
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setStatus("Error submitting the form.");
-    }
+    // Dummy submit – no API call. Simulates success after a short delay.
+    await new Promise((r) => setTimeout(r, 800));
+    setStatus("Your message has been sent successfully! (Demo – no backend)");
   };
 
   return (

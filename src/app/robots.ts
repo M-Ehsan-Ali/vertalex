@@ -2,37 +2,12 @@ import { MetadataRoute } from "next";
 
 export const revalidate = 0;
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+/** Static robots – no backend. All data is in src/data. */
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/robots.txt`,
-    { cache: "no-store" },
-  );
-
-  const text = await res.text();
-
-  const lines = text.split("\n");
-
-  const userAgent = lines
-    .find((line) => line.startsWith("User-agent: "))
-    ?.replace("User-agent: ", "");
-  const allow = lines
-    .find((line) => line.startsWith("Allow: "))
-    ?.replace("Allow: ", "");
-  const disallow = lines
-    .find((line) => line.startsWith("Disallow: "))
-    ?.replace("Disallow: ", "");
-  const sitemap = lines
-    .find((line) => line.startsWith("Sitemap: "))
-    ?.replace("Sitemap: ", "");
-
-  const robots: MetadataRoute.Robots = {
-    rules: {
-      userAgent,
-      allow,
-      disallow,
-    },
-    sitemap,
+  return {
+    rules: { userAgent: "*", allow: "/", disallow: "" },
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
-
-  return robots;
 }

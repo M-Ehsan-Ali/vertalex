@@ -55,7 +55,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
                 src={item.image.sourceUrl}
                 alt={item.image.id}
                 loading="lazy"
-                className="w-[380px] h-[375px]"
+                className="w-[380px] h-[375px] rounded-t-[20px]"
               />
               <div
                 className="w-[48px] h-[100px] rounded-[20px] absolute top-[32px] left-[24px]"
@@ -92,7 +92,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
               src={currentProject.image.sourceUrl}
               alt={currentProject.image.id}
               loading="lazy"
-              className="w-[288px] h-[288px]"
+              className="w-[288px] h-[288px] rounded-t-[20px]"
             />
             <div
               className="w-[48px] h-[100px] rounded-[20px] absolute top-[32px] left-[24px]"

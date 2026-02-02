@@ -1,16 +1,11 @@
-import { print } from "graphql/language/printer";
-// import { ContentNode, Page } from "@/gql/graphql";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-import { PageQuery } from "./PageQuery";
+import { getPageByDatabaseId } from "@/data";
 
 interface TemplateProps {
-  node: any;
+  node: { databaseId: number };
 }
 
 export default async function PageTemplate({ node }: TemplateProps) {
-  const { page } = await fetchGraphQL<{ page: any }>(print(PageQuery), {
-    id: node.databaseId,
-  });
+  const page = getPageByDatabaseId(node.databaseId);
 
-  return <div dangerouslySetInnerHTML={{ __html: page?.content || "" }} />;
+  return <div dangerouslySetInnerHTML={{ __html: page?.content ?? "" }} />;
 }

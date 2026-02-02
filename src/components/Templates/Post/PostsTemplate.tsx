@@ -1,21 +1,8 @@
-import { print } from "graphql/language/printer";
-
-// import { Post } from "@/gql/graphql";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-
-import { PostQuery } from "./PostQuery";
+import { postsData } from "@/data";
 
 interface TemplateProps {}
 
-export default async function PostsTemplate({}: TemplateProps) {
-  const properties = await fetchGraphQL<{ post: any }>(print(PostQuery));
-  return (
-    <div></div>
-    // <div className={styles.post}>
-    //   <h1 className={styles.title}>{post.title}</h1>
-    //   <div className={styles.author}>By {post.author?.node.name}</div>
-
-    //   <div dangerouslySetInnerHTML={{ __html: post.content || "" }} />
-    // </div>
-  );
+export default async function PostsTemplate(_props: TemplateProps) {
+  // Use postsData for a list view if needed
+  return <div>{postsData.length > 0 ? null : null}</div>;
 }

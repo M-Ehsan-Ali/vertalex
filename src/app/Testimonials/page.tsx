@@ -1,46 +1,24 @@
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
+import { getTestimonials } from "@/data";
 import Content from "./content";
 
 interface Testimonial {
   title: string;
   designation: string;
   review: string;
-  logo: {
-    mediaItemUrl: string;
-  };
+  logo: { mediaItemUrl?: string; sourceUrl?: string };
 }
 
 export default async function Testimonials() {
-  const query = `
-   query GetTestimonials {
-  testimonials {
-    nodes {
-      testimonial {
-        designation
-        review
-        name
-        logo {
-          id
-          sourceUrl
-        }
-      }
-    }
-  }
-}
-  `;
-
-  let testimonials: Testimonial[] = [];
-  try {
-    const data = await fetchGraphQL(query);
-    testimonials = data?.testimonials?.nodes.map((node: any) => ({
-      title: node.testimonial.name,
-      designation: node.testimonial.designation,
-      review: node.testimonial.review,
-      logo: node.testimonial.logo,
-    }));
-  } catch (error) {
-    console.error("Error fetching testimonials:", error);
-  }
+  const data = getTestimonials();
+  const testimonials: Testimonial[] = (data?.testimonials?.nodes ?? []).map((node: any) => ({
+    title: node.testimonial.name,
+    designation: node.testimonial.designation,
+    review: node.testimonial.review,
+    logo: {
+      mediaItemUrl: node.testimonial.logo?.sourceUrl,
+      sourceUrl: node.testimonial.logo?.sourceUrl,
+    },
+  }));
 
   if (testimonials.length === 0) {
     return (

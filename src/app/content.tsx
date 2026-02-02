@@ -29,14 +29,14 @@ export default function Home() {
             </p>
           </div>
           <p className="font-raleway text-[39px] xl:text-[96px] font-normal leading-[42px] xl:leading-[90px] tracking-[-0.05em] text-center xl:text-left decoration-skip-ink mt-[24px]">
-            Cost Effective <br /> & CO2 Compliant
+          Cost Effective & Compliant Aluminium Extrusions
           </p>
           <p className="xl:w-[592px] font-rubik text-[10px] xl:text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center xl:text-left decoration-skip-ink mt-[32px]">
             Crofton MEA is a UAE based consulting firm that delivers bespoke and{" "}
             catalogue aluminium extrusions and finishes of the highest quality
             at competitive prices internationally.
           </p>
-          <div className="flex gap-[16px] mt-[40px] justify-center xl:justify-start">
+          {/* <div className="flex gap-[16px] mt-[40px] justify-center xl:justify-start">
             <button className="bg-[#445AE0] p-[8px_18px] xl:p-[16px_24px] gap-[10px] rounded-[200px] font-rubik text-[10px] xl:text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-lef text-white">
               See our solutions
             </button>
@@ -46,7 +46,7 @@ export default function Home() {
             >
               Get in touch
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className="w-full h-[320px] sm:h-[600px] md:h-[760px] xl:h-auto xl:w-[40%] bg-[#64CE5B] p-[12px] relative">
           <MovingImages images={images} interval={4000} />

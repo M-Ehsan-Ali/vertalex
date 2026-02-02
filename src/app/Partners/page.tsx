@@ -6,20 +6,20 @@ const Partner = () => {
       </p>
       <div className="flex gap-[40px] xl:gap-[190px]">
         <img
-          src="/paradise.png"
-          alt="paradise"
+          src="/jrlgroup.jpeg"
+          alt="jrlgroup"
           loading="lazy"
           className="w-[90px] h-[30px] xl:w-[120px] sm-h-[50px]"
         />
         <img
-          src="/aspen.png"
-          alt="aspen"
+          src="/clearvue.jpeg"
+          alt="clearvue"
           loading="lazy"
           className="w-[90px] h-[30px] xl:w-[120px] sm-h-[50px]"
         />
         <img
-          src="/octagon.png"
-          alt="octagon"
+          src="/mcmullen.jpeg"
+          alt="mcmullen"
           loading="lazy"
           className="w-[90px] h-[30px] xl:w-[120px] sm-h-[50px]"
         />

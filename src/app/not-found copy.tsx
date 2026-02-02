@@ -1,20 +1,16 @@
-import { print } from "graphql/language/printer";
 import type { Metadata } from "next";
 
+import { getContentNodeBySlug, getPageByDatabaseId } from "@/data";
 import { setSeoData } from "@/utils/seoData";
 
-import { PageQuery } from "@/components/Templates/Page/PageQuery";
-// import { ContentNode, Page } from "@/gql/graphql";
-import { SeoQuery } from "@/queries/general/SeoQuery";
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
-
-const notFoundPageWordPressId = 27;
+const notFoundPageId = 27;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { contentNode } = await fetchGraphQL<{ contentNode: any }>(
-    print(SeoQuery),
-    { slug: notFoundPageWordPressId, idType: "DATABASE_ID" }
-  );
+  const contentNode = getContentNodeBySlug(String(notFoundPageId), "DATABASE_ID");
+
+  if (!contentNode?.seo) {
+    return { title: "404 Not Found" };
+  }
 
   const metadata = setSeoData({ seo: contentNode.seo });
 
@@ -27,10 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NotFound() {
-  const { page } = await fetchGraphQL<{ page: any }>(print(PageQuery), {
-    id: notFoundPageWordPressId,
-  });
+  const page = getPageByDatabaseId(notFoundPageId);
 
-  return <div dangerouslySetInnerHTML={{ __html: page.content || " " }} />;
-  // return <div>Not found</div>;
+  return (
+    <div dangerouslySetInnerHTML={{ __html: page?.content ?? "<h1>Not found</h1>" }} />
+  );
 }

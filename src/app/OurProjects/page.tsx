@@ -1,36 +1,17 @@
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
+import { getProjects } from "@/data";
 import ProjectSlider from "../ourProjects";
 
 const OurProjects = async () => {
-  const projectsQuery = `
-    query GetProjects {
-    projects {
-      nodes {
-        projects {
-          color
-          description
-          title
-          image {
-            id
-            sourceUrl
-          }
-        }
-      }
-    }
-  }`;
-  let projectData: any[] = [];
-  try {
-    const projects: any = await fetchGraphQL(projectsQuery);
-    projectData = projects?.projects.nodes.map((node: any, index: any) => ({
-      key: index,
-      title: node.projects.title,
-      description: node.projects.description,
-      image: node.projects.image,
-      color: node.projects.color,
-    }));
-  } catch (error) {
-    console.error("Error fetching news:", error);
-  }
+  const projects = getProjects();
+  const projectData = projects?.projects?.nodes?.map((node: any, index: number) => ({
+    key: index,
+    title: node.projects.title,
+    description: node.projects.description,
+    image: node.projects.image,
+    color: node.projects.color,
+  })) ?? [];
+  if (projectData.length === 0) return null;
+
   return (
     <div
       className="flex flex-col items-center mt-[50px] xl:mt-[175px]"
@@ -44,6 +25,6 @@ const OurProjects = async () => {
       <ProjectSlider projectData={projectData} />
     </div>
   );
-};
+}
 
-export default OurProjects;
+export default OurProjects

@@ -1,6 +1,5 @@
-import { fetchGraphQL } from "@/utils/fetchGraphQL";
+import { getNews } from "@/data";
 
-// new interface start
 interface UserImage {
   id: string;
   sourceUrl: string;
@@ -14,7 +13,6 @@ interface NewsImage {
 interface NewsDetails {
   about: string;
   description: string;
-  fieldGroupName: string;
   readtime: string;
   title: string;
   username: string;
@@ -22,64 +20,32 @@ interface NewsDetails {
   image: NewsImage;
 }
 
-interface NewsNode {
-  New: NewsDetails;
-}
-
-interface GetNewsResponse {
-  news: any;
-  nodes: NewsNode[];
-}
-// new interface end
 const News = async () => {
-  // news api and data fetch starts here
-  const newsQuery = `
-  query GetNews {
-   news {
-    nodes {
-      New {
-        about
-        description
-        readtime
-        title
-        username
-        userimage {
-          id
-          sourceUrl
-        }
-        image {
-          id
-          sourceUrl
-        }
-      }
-    }
-  }
-}`;
-  let newsData: NewsDetails[] = [];
+  const news = getNews();
+  const newsData: NewsDetails[] = (news?.news?.nodes ?? []).map((node: any, index: number) => ({
+    key: index,
+    title: node.New.title,
+    about: node.New.about,
+    description: node.New.description,
+    readtime: node.New.readtime,
+    username: node.New.username,
+    userimage: node.New.userimage,
+    image: node.New.image,
+  }));
 
-  try {
-    const news: GetNewsResponse = await fetchGraphQL(newsQuery);
-    newsData = news?.news.nodes.map((node: any, index: any) => ({
-      key: index,
-      title: node.New.title,
-      about: node.New.about,
-      description: node.New.description,
-      readtime: node.New.readtime,
-      username: node.New.username,
-      userimage: node.New.userimage,
-      image: node.New.image,
-    }));
-  } catch (error) {
-    console.error("Error fetching news:", error);
+  if (newsData.length === 0) {
+    return (
+      <div className="px-[16px] xl:px-[112px]" id="in-news">
+        <p className="font-raleway text-[24px] xl:text-[62px] font-medium">News</p>
+        <p className="mt-4 text-[#646a69]">No news items yet. Add entries in src/data/index.ts.</p>
+      </div>
+    );
   }
 
-  // setting last element of news to show bigger
-  const lastElement: any = newsData[newsData.length - 1];
-  // separating about by comma
-  const aboutParts: any = lastElement.about
+  const lastElement = newsData[newsData.length - 1];
+  const aboutParts = lastElement.about
     .split(",")
-    .map((part: any) => part.trim());
-  // news api and data fetch ends here
+    .map((part: string) => part.trim());
 
   return (
     <div className="px-[16px] xl:px-[112px]" id={"in-news"}>
