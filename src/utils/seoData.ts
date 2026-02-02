@@ -4,7 +4,7 @@ export const setSeoData = ({ seo }: { seo: any }) => {
   if (!seo) return {};
 
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
     title: seo.title || "",
     description: seo.metaDesc || "",
     robots: {
