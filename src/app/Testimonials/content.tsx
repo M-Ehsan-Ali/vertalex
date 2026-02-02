@@ -8,7 +8,8 @@ interface Testimonial {
   designation: string;
   review: string;
   logo: {
-    mediaItemUrl: string;
+    mediaItemUrl?: string;
+    sourceUrl?: string;
   };
 }
 
