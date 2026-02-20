@@ -1,21 +1,20 @@
-import Link from "next/link";
-import KeyElement from "./KeyElement/page";
-import MovingImages from "./MovingImages";
-import News from "./News/page";
-import OurProjects from "./OurProjects/page";
-import Partner from "./Partners/page";
-import Testimonials from "./Testimonials/page";
-import WhyUs from "./WhyUs/page";
+import Link from 'next/link'
+import KeyElement from './KeyElement/page'
+import MovingImages from './MovingImages'
+import News from './News/page'
+import OurProjects from './OurProjects/page'
+import Partner from './Partners/page'
+import WhyUs from './WhyUs/page'
 
 // moving image content
 
 const images = [
-  "/heroOne.jpeg",
-  "heroTwo.jpeg",
-  "heroThree.jpeg",
-  "heroFour.jpeg",
-  "heroFive.jpeg",
-];
+  '/heroOne.jpeg',
+  'heroTwo.jpeg',
+  'heroThree.jpeg',
+  'heroFour.jpeg',
+  'heroFive.jpeg',
+]
 export default function Home() {
   return (
     <div id="home">
@@ -29,10 +28,10 @@ export default function Home() {
             </p>
           </div>
           <p className="font-raleway text-[39px] xl:text-[96px] font-normal leading-[42px] xl:leading-[90px] tracking-[-0.05em] text-center xl:text-left decoration-skip-ink mt-[24px]">
-          Cost Effective & Compliant Aluminium Extrusions
+            Cost Effective & Compliant Aluminium Extrusions
           </p>
           <p className="xl:w-[592px] font-rubik text-[10px] xl:text-[18px] font-normal leading-[26px] tracking-[-0.004em] text-center xl:text-left decoration-skip-ink mt-[32px]">
-            Crofton MEA is a UAE based consulting firm that delivers bespoke and{" "}
+            Crofton MEA is a UAE based consulting firm that delivers bespoke and{' '}
             catalogue aluminium extrusions and finishes of the highest quality
             at competitive prices internationally.
           </p>
@@ -78,7 +77,7 @@ export default function Home() {
               cleaner,
               <br /> greener, and healthier planet.
             </p>
-            <Link href={"#contact-us"}>
+            <Link href={'#contact-us'}>
               <button className="bg-[#445ae0] rounded-[200px] p-[6px_24px] xl:p-[16px_24px] font-figtree text-[11px] xl:text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline text-white mt-[40px]">
                 Get in touch
               </button>
@@ -109,11 +108,11 @@ export default function Home() {
       {/* News Section end */}
 
       {/* Testimonial Section start */}
-      <Testimonials />
+      {/* <Testimonials /> */}
       {/* Testimonial Section end */}
 
       {/* Source for Aluminium Section start */}
-      <div className="p-[18px_50px] xl:p-[64px_96px] bg-[#54ce5b] mt-[56px] xl:mt-[170px]">
+      {/* <div className="p-[18px_50px] xl:p-[64px_96px] bg-[#54ce5b] mt-[56px] xl:mt-[170px]">
         <div className="flex flex-col gap-[24px] xl:flex-row justify-between items-center">
           <p className="xl:w-[540px] font-Raleway text-[16px] xl:text-[62px] font-medium xl:leading-[68px] tracking-[-0.03em] text-left no-underline text-white">
             Your Source For Aluminum Updates
@@ -129,8 +128,8 @@ export default function Home() {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Source for Aluminium Section end */}
     </div>
-  );
+  )
 }

@@ -90,11 +90,11 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
             />
             <div
               className="w-[48px] h-[100px] rounded-[20px] absolute top-[32px] left-[24px]"
-              style={{
-                background: currentProject.color
-                  ? `#${currentProject.color}`
-                  : '#FFFFFF',
-              }}
+              // style={{
+              //   background: currentProject.color
+              //     ? `#${currentProject.color}`
+              //     : '#FFFFFF',
+              // }}
             ></div>
           </div>
 
