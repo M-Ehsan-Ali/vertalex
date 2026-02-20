@@ -1,61 +1,70 @@
-import { getNews } from "@/data";
+import { getNews } from '@/data'
 
 interface UserImage {
-  id: string;
-  sourceUrl: string;
+  id: string
+  sourceUrl: string
 }
 
 interface NewsImage {
-  id: string;
-  sourceUrl: string;
+  id: string
+  sourceUrl: string
 }
 
 interface NewsDetails {
-  about: string;
-  description: string;
-  readtime: string;
-  title: string;
-  username: string;
-  userimage: UserImage;
-  image: NewsImage;
+  about: string
+  description: string
+  readtime: string
+  title: string
+  username: string
+  userimage: UserImage
+  image: NewsImage
 }
 
 const News = async () => {
-  const news = getNews();
-  const newsData: NewsDetails[] = (news?.news?.nodes ?? []).map((node: any, index: number) => ({
-    key: index,
-    title: node.New.title,
-    about: node.New.about,
-    description: node.New.description,
-    readtime: node.New.readtime,
-    username: node.New.username,
-    userimage: node.New.userimage,
-    image: node.New.image,
-  }));
+  const news = getNews()
+  const newsData: NewsDetails[] = (news?.news?.nodes ?? []).map(
+    (node: any, index: number) => ({
+      key: index,
+      title: node.New.title,
+      about: node.New.about,
+      description: node.New.description,
+      readtime: node.New.readtime,
+      username: node.New.username,
+      userimage: node.New.userimage,
+      image: node.New.image,
+    })
+  )
 
   if (newsData.length === 0) {
     return (
       <div className="px-[16px] xl:px-[112px]" id="in-news">
-        <p className="font-raleway text-[24px] xl:text-[62px] font-medium">News</p>
-        <p className="mt-4 text-[#646a69]">No news items yet. Add entries in src/data/index.ts.</p>
+        <p className="font-raleway text-[24px] xl:text-[62px] font-medium">
+          News
+        </p>
+        <p className="mt-4 text-[#646a69]">
+          No news items yet. Add entries in src/data/index.ts.
+        </p>
       </div>
-    );
+    )
   }
 
-  const lastElement = newsData[newsData.length - 1];
+  const lastElement = newsData[newsData.length - 1]
   const aboutParts = lastElement.about
-    .split(",")
-    .map((part: string) => part.trim());
+    .split(',')
+    .map((part: string) => part.trim())
 
   return (
-    <div className="px-[16px] xl:px-[112px]" id={"in-news"}>
+    <div className="px-[16px] xl:px-[112px]" id={'in-news'}>
       <div className="flex justify-between items-center">
         <p className="font-raleway text-[24px] xl:text-[62px] font-medium xl:leading-[68px] tracking-[-0.03em] text-left no-underline">
           News
         </p>
-        <button className="p-[6px_12px] xl:p-[16px_24px] rounded-[200px] border border-[#64ce5b] flex items-center gap-[8px] font-figtree text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline">
+        <a
+          href="https://www.lme.com/metals/non-ferrous/lme-aluminium"
+          className="p-[6px_12px] xl:p-[16px_24px] rounded-[200px] border border-[#64ce5b] flex items-center gap-[8px] font-figtree text-[18px] font-medium leading-[24px] tracking-[-0.004em] text-left no-underline"
+        >
           See All <img src={`/tailIcon.svg`} alt="Tail" loading="lazy" />
-        </button>
+        </a>
       </div>
       <div className="mt-[88px] flex flex-col xl:flex-row justify-between gap-[32px]">
         <div className="xl:w-[60%]">
@@ -131,7 +140,7 @@ const News = async () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default News;
+export default News

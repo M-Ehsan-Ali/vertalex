@@ -47,7 +47,7 @@ export default function Header() {
             </div>
             <div>
               <Link
-                href={'#in-news'}
+                href={'https://www.lme.com/metals/non-ferrous/lme-aluminium'}
                 className="font-rubik text-[10px] sm:text-[16px] font-medium leading-6 tracking-tight text-center decoration-skip-ink"
               >
                 News
