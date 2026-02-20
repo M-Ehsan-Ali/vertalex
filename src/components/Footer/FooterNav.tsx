@@ -1,7 +1,7 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function FooterNav() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
   return (
     <>
       <div className="mt-[32px] p-[42px_18px_24px] xl:p-[100px_112px_56px] flex justify-between">
@@ -29,14 +29,14 @@ export default function FooterNav() {
               +971 (0) 50 9236677
             </p>
             <Link
-              href={"mailto:extrusions@crofton.me"}
+              href={'mailto:extrusions@crofton.me'}
               className="font-rubik text-[12px] xl:text-xl font-bold leading-9 tracking-tight text-left underline decoration-solid decoration-from-font"
             >
               extrusions@crofton.me
             </Link>
           </div>
           <div className="flex flex-col gap-[16px]">
-            <div className="flex flex-col xl:flex-row gap-[16px] items-center p-[4px]">
+            {/* <div className="flex flex-col xl:flex-row gap-[16px] items-center p-[4px]">
               <img
                 src="/fbIcon.svg"
                 alt="fb"
@@ -57,10 +57,10 @@ export default function FooterNav() {
               <p className="font-figtree text-[12px] xl:text-base font-medium leading-6 tracking-tight text-left decoration-from-font text-[#1d1f1e]">
                 Follow us on Instagram
               </p>
-            </div>
+            </div> */}
             <Link
               className="flex flex-col xl:flex-row gap-[16px] items-center p-[4px]"
-              href={"https://www.linkedin.com/company/vertalex"}
+              href={'https://www.linkedin.com/company/vertalex'}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -95,5 +95,5 @@ export default function FooterNav() {
         </p>
       </div>
     </>
-  );
+  )
 }

@@ -1,48 +1,48 @@
-"use client";
-import React, { useState } from "react";
+'use client'
+import React, { useState } from 'react'
 
 interface ProjectItem {
   image: {
-    sourceUrl: string;
-    id: string;
-  };
-  title: string;
-  description: string;
-  color?: string;
+    sourceUrl: string
+    id: string
+  }
+  title: string
+  description: string
+  color?: string
 }
 
 interface ProjectSliderProps {
-  projectData: ProjectItem[];
+  projectData: ProjectItem[]
 }
 
 const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [transitioning, setTransitioning] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [transitioning, setTransitioning] = useState(false)
 
   // Handlers for carousel navigation
   const handleNext = () => {
-    if (transitioning) return;
-    setTransitioning(true);
+    if (transitioning) return
+    setTransitioning(true)
     setTimeout(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === projectData.length - 1 ? 0 : prevIndex + 1
-      );
-      setTransitioning(false);
-    }, 300); // Match transition duration
-  };
+      )
+      setTransitioning(false)
+    }, 300) // Match transition duration
+  }
 
   const handlePrevious = () => {
-    if (transitioning) return;
-    setTransitioning(true);
+    if (transitioning) return
+    setTransitioning(true)
     setTimeout(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === 0 ? projectData.length - 1 : prevIndex - 1
-      );
-      setTransitioning(false);
-    }, 300); // Match transition duration
-  };
+      )
+      setTransitioning(false)
+    }, 300) // Match transition duration
+  }
 
-  const currentProject = projectData[currentIndex];
+  const currentProject = projectData[currentIndex]
 
   return (
     <div className="mt-[42px] xl:mt-[165px]">
@@ -57,12 +57,6 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
                 loading="lazy"
                 className="w-[380px] h-[375px] rounded-t-[20px]"
               />
-              <div
-                className="w-[48px] h-[100px] rounded-[20px] absolute top-[32px] left-[24px]"
-                style={{
-                  background: item.color ? `#${item.color}` : "#FFFFFF",
-                }}
-              ></div>
             </div>
 
             <div className="p-[32px]">
@@ -99,7 +93,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
               style={{
                 background: currentProject.color
                   ? `#${currentProject.color}`
-                  : "#FFFFFF",
+                  : '#FFFFFF',
               }}
             ></div>
           </div>
@@ -122,7 +116,7 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({ projectData }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectSlider;
+export default ProjectSlider
